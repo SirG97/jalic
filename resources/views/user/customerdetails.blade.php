@@ -1,112 +1,206 @@
 @extends('user.layout.access_role')
-@section('title', 'Pins')
+@section('title', 'Order')
 @section('icon', 'fa-user-plus')
 @section('content')
     <div class="container-fluid">
-        <div class="row">
+        <div class="row ">
             <div class="col-md-12">
-                @include('includes\message')
-            </div>
-        </div>
+                <div class="custom-panel card ">
+                    <div class="d-flex justify-content-between py-2 px-3">
+                        <div class="text-secondary mb-1">
 
-        <div class="row">
-            <div class="col-md-12">
-{{--                <nav class="nav nav-tabs customer-nav mr-2" id="myTab" role="tablist">--}}
-{{--                    <a aria-controls="general" aria-selected="true" class="nav-link active" data-toggle="tab" href="#general"--}}
-{{--                       id="general-tab" role="tab">General</a>--}}
-{{--                    <a class="nav-link " aria-controls="contribution" aria-selected="true" class="nav-link" data-toggle="tab" href="#contribution"--}}
-{{--                       id="contribution-tab" role="tab">Contributions</a>--}}
-{{--                </nav>--}}
-                <div class="" id="">
-                    <div class="" id="general">
-                        <div class="custom-panel card py-2 tab-pane active">
-                            <div class="font-weight-bold text-secondary mb-1 py-3 px-3">
-                                Customer information
+                            <div class="order-name">{{$customer->name}}</div>
+
+                        </div>
+                        <div class="font-weight-bold text-secondary mb-1 d-flex justify-content-end">
+                            <div class="text-right">
+                                Order ID: {{$customer->customer_id}}
                             </div>
 
-                            <form class="cool-border py-3 px-2" action="/customer/{{$customer->customer_id}}/edit" method="POST">
-                                <div class="col-md-12">
-                                    <div class="form-row">
-                                        <input type="hidden" id="customer_id"  value="" required>
-                                        <input type="hidden" id="token" name="token" value="{{\App\Classes\CSRFToken::_token()}}">
-                                        <div class="col-md-4 mb-3">
-                                            <label for="firstname">First name</label>
-                                            <input type="text" class="form-control" id="firstname" name="firstname" value="{{$customer->firstname}}" required>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="surname">Surname</label>
-                                            <input type="text" class="form-control" id="surname" name="surname" value="{{$customer->surname}}" required>
-
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="email">Email</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                                                </div>
-                                                <input type="email" class="form-control" name="email" id="email" value="{{$customer->email}}" aria-describedby="inputGroupPrepend3" required>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-5 mb-3">
-                                            <label for="phone">Phone number</label>
-                                            <input type="text" class="form-control"  name="phone" id="phone" value="{{$customer->phone}}" required>
-
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <label for="city">City</label>
-                                            <input type="text" class="form-control" name="city" id="city" value="{{$customer->city}}" required>
-
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="state">State</label>
-                                            <select class="custom-select" id="state" name="state" required>
-                                                <option selected value="{{$customer->state}}">{{$customer->state}}</option>
-                                                <option value="Delta">Delta</option>
-                                                <option value="Enugu">Enugu</option>
-                                                <option value="Ebonyi">Ebonyi</option>
-                                                <option value="Imo">Imo</option>
-                                                <option value="Abia">Abia</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-5 mb-3">
-                                            <label for="amount">Daily amount</label>
-                                            <div class="input-group mb-3">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">&#8358</span>
-                                                </div>
-                                                <input type="text" name="amount" id="amount" value="{{$customer->amount}}"  class="form-control" aria-label="Amount (to the nearest dollar)">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">.00</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-7 mb-3">
-                                            <label for="state">Address</label>
-                                            <input type="text" class="form-control"  name="address" id="address" value="{{$customer->address}}" required>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </form>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="deleteCustomerBtn">Save</button>
+                        </div>
+                    </div>
+                    <div class="order-details-container cool-border-top">
+                        <div class="order-details d-flex flex-column flex-sm-row py-3">
+                            <div class="order-detail px-2">
+                                <div class="order-detail-title mt-1">Name</div>
+                                <div>{{$customer->name}}</div>
+                            </div>
+                            <div class="order-detail px-2">
+                                <div class="order-detail-title mt-1">Address:</div>
+                                <div>{{$customer->address}}</div>
+                            </div>
+                            <div class="order-detail px-2">
+                                <div class="order-detail-title mt-1">Phone:</div>
+                                <div>{{$customer->phone}}</div>
+                            </div>
+                            <div class="order-detail px-2">
+                                <div class="order-detail-title mt-1">Email:</div>
+                                <div>e{{$customer->email}}</div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
+        </div>
+        <div class="row ">
+            <div class="col-md-7">
+                <div class="custom-panel card pt-2">
+                    <div class="font-weight-bold text-secondary  py-3 px-3 cool-border-bottom">Customer details
+                    </div>
+                    <div class="full-details d-flex flex-column px-3">
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Profile :</div>
+                                <div class="col-sm-8">
+                                    <img src="/" >
+                                </div>
+                            </div>
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Marital status:</div>
+                                <div class="col-sm-8">
+                                    {{$customer->marital_status}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Dat of Birth</div>
+                                <div class="col-sm-8"> {{$customer->dob}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Sex:</div>
+                                <div class="col-sm-8"> {{$customer->sex}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Occupation:</div>
+                                <div class="col-sm-8">
+                                    {{$customer->occupation}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Address:</div>
+                                <div class="col-sm-8">
+                                    {{$customer->address}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Shop/Store/Office:</div>
+                                <div class="col-sm-8"> {{$customer->office}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Savings plan:</div>
+                                <div class="col-sm-8">{{$customer->saving_period}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Daily savings:</div>
+                                <div class="col-sm-8">{{$customer->amount}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Purpose:</div>
+                                <div class="col-sm-8"> {{$customer->purpose}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Account name:</div>
+                                <div class="col-sm-8"> {{$customer->account_name}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Account number:</div>
+                                <div class="col-sm-8"> {{$customer->account_name}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Bank:</div>
+                                <div class="col-sm-8"> {{$customer->bank}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Next of Kin name:</div>
+                                <div class="col-sm-8">{{$customer->kin_name}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Next of Kin phone:</div>
+                                <div class="col-sm-8"> {{$customer->kin_phone}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Next of Kin address:</div>
+                                <div class="col-sm-8"> {{$customer->kin_address}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Relationship:</div>
+                                <div class="col-sm-8">{{$customer->kin_relationship}}</div>
+                            </div>
+                        </div>
+                        <div class="full-details-item">
+                            <div class="d-flex row my-1">
+                                <div class="col-sm-4 order-detail-title">Registered by:</div>
+                                <div class="col-sm-8"> sproea</div>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="custom-panel card pt-2">
+                    <div class="font-weight-bold text-secondary py-3 px-3 cool-border-bottom">
+                        Order Timeline
+                    </div>
+                    <div class="full-details">
+                        <div class="list-group list-group-flush">
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Registered</h6>
+                                    <small>3 days ago</small>
+                                </div>
+                                <p class="mb-1 font-weight-normal">Donec id elit non mi porta gravida at eget metus. </p>
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Ongoing</h6>
+                                    <small class="text-muted">3 days ago</small>
+                                </div>
+                                <p class="mb-1">Donec id elit non mi porta gravida.</p>
 
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">Delivered</h6>
+                                    <small class="text-muted">3 days ago</small>
+                                </div>
+                                <p class="mb-1">Donec id elit non mi porta gravida at eget </p>
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-@endsection
+@endsection()

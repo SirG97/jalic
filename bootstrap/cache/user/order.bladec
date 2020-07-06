@@ -51,9 +51,15 @@
  <div class="full-details d-flex flex-column px-3">
  <div class="full-details-item">
  <div class="d-flex row my-1">
+ <div class="col-sm-4 order-detail-title">Profile :</div>
+ <div class="col-sm-8">
+ <img src="/" >
+ </div>
+ </div>
+ <div class="d-flex row my-1">
  <div class="col-sm-4 order-detail-title">Marital status:</div>
  <div class="col-sm-8">
- <img src="/" class="img-fluid" alt="Product QRcode">
+ Single
  </div>
  </div>
  </div>
@@ -111,40 +117,35 @@
  </div>
  <div class="full-details-item">
  <div class="d-flex row my-1">
- <div class="col-sm-4 order-detail-title">Quantity:</div>
+ <div class="col-sm-4 order-detail-title">Next of Kin name:</div>
  <div class="col-sm-8">32</div>
  </div>
  </div>
  <div class="full-details-item">
  <div class="d-flex row my-1">
- <div class="col-sm-4 order-detail-title">Pickup address:</div>
+ <div class="col-sm-4 order-detail-title">Next of Kin phone:</div>
  <div class="col-sm-8"> 23 amsa street</div>
  </div>
  </div>
  <div class="full-details-item">
  <div class="d-flex row my-1">
- <div class="col-sm-4 order-detail-title">Pickup landmark:</div>
+ <div class="col-sm-4 order-detail-title">Next of Kin address:</div>
  <div class="col-sm-8"> sdszmk</div>
  </div>
  </div>
  <div class="full-details-item">
  <div class="d-flex row my-1">
- <div class="col-sm-4 order-detail-title">Delivery address:</div>
+ <div class="col-sm-4 order-detail-title">Relationship:</div>
  <div class="col-sm-8"> peowp</div>
  </div>
  </div>
  <div class="full-details-item">
  <div class="d-flex row my-1">
- <div class="col-sm-4 order-detail-title">Delivery landmark:</div>
+ <div class="col-sm-4 order-detail-title">Registered by:</div>
  <div class="col-sm-8"> sproea</div>
  </div>
  </div>
- <div class="full-details-item">
- <div class="d-flex row my-1">
- <div class="col-sm-4 order-detail-title">Description:</div>
- <div class="col-sm-8"> smllad</div>
- </div>
- </div>
+
  </div>
  </div>
  </div>
