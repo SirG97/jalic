@@ -33,7 +33,7 @@ $router->map('GET', '/customer/[:terms]/search', '\App\Controllers\CustomerContr
 // Staff routes
 $router->map('GET', '/profile', '\App\Controllers\UserController@view_profile', 'profile');
 
-$router->map('GET', '/staff/[:staff_id]', '\App\Controllers\UserController@get_staff', 'get_rider');
+$router->map('GET', '/staff/[:staff_id]', '\App\Controllers\UserController@get_single_staff', 'get_single_staff');
 $router->map('GET', '/staff', '\App\Controllers\UserController@get_staff', 'get_staff');
 $router->map('GET', '/new_staff', '\App\Controllers\UserController@new_staff_form', 'new_staff_form');
 $router->map('POST', '/staff/add', '\App\Controllers\UserController@store_staff', 'store_staff');

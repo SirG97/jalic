@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 <h6 class="text-primary">Savings plan</h6>
-                                <div class="form-row">
+                                    <div class="form-row">
                                     <div class="col-md-3 mb-3">
                                         <label for="saving_period">Savings Period</label>
                                         <input type="text" name="saving_period" value="" id="saving_period" class="form-control">
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <h6 class="text-primary">Next of Kin</h6>
-                                <div class="form-row">
+                                    <div class="form-row">
                                     <div class="col-md-4 mb-3">
                                         <label for="kin_name">Name</label>
                                         <input type="text" class="form-control" id="kin_name" name="kin_name" value="" required>
@@ -145,7 +145,7 @@
                                     </div>
                                 </div>
                                 <h6 class="text-primary">Account details</h6>
-                                <div class="form-row">
+                                    <div class="form-row">
                                     <div class="col-md-4 mb-3">
                                         <label for="account_name">Account Name</label>
                                         <input type="text" class="form-control" id="account_name" name="account_name" value="" required>
@@ -159,16 +159,16 @@
                                         <input type="text" class="form-control" id="bank" name="bank" required>
                                     </div>
 
-                                </div>
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
-                                            <label class="form-check-label" for="invalidCheck3">
-                                                Agree to terms and conditions
-                                            </label>
+                                    </div>
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="invalidCheck3" required>
+                                                <label class="form-check-label" for="invalidCheck3">
+                                                    Agree to terms and conditions
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                            </div>
                         </div>
                     </div>
                     <div class="panel-footer py-2 mt-2 mr-3 d-flex justify-content-end">

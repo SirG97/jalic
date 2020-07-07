@@ -23,9 +23,7 @@ class CustomerController extends BaseController{
     public function getcustomer($id){
         $customer_id = $id['customer_id'];
         $customer = Customer::where('customer_id', $customer_id)->first();
-
         $contributions = Contribution::where('phone', $customer->phone)->count();
-
 
         return view('user\customerdetails', [
                                                     'customer' =>$customer,
@@ -119,20 +117,32 @@ class CustomerController extends BaseController{
     }
 
     public function editcustomer($id){
-
         $customer_id = $id['customer_id'];
         if(Request::has('post')){
             $request = Request::get('post');
             if(CSRFToken::verifyCSRFToken($request->token, false)){
                 $rules = [
-                    'email' => ['required' => true, 'maxLength' => 30, 'email' => true, 'unique_edit' => 'customers|' .$customer_id .'|customer_id'],
-                    'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
-                    'surname' => ['string' => true, 'maxLength' => 40],
-                    'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11],
-                    'city' => ['required' => true, 'maxLength' => '50', 'string' => true],
-                    'state' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                    'email' => ['required' => true, 'maxLength' => 30, 'email' => true],
+                    'name' => ['required' => true, 'maxLength' => 50, 'string' => true],
+                    'title' => ['string' => true, 'maxLength' => 10],
+                    'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true],
+                    'marital_status' => [ 'maxLength' => '50', 'string' => true],
+                    'occupation' => ['maxLength' => '50', 'string' => true],
                     'address' => ['required' => true, 'maxLength' => '150'],
-                    'amount' => ['required' => true,  'number' => true]
+                    'dob' => ['mixed' => true],
+                    'sex' => ['maxLength' => 10,  'string' => true],
+                    'image' => ['string' => true],
+                    'saving_period' => ['required' => true, 'string' => true],
+                    'amount' => ['required' => true,  'number' => true],
+                    'account_number' => ['number' => true],
+                    'amount' => ['required' => true,  'number' => true],
+                    'bank' => ['string' => true],
+                    'purpose' => ['mixed' => true],
+                    'kin_name' => ['mixed' => true],
+                    'kin_address' => ['mixed' => true],
+                    'kin_phone' => ['mixed' => true],
+                    'office' => ['mixed' => true],
+                    'kin_relationship' => ['mixed' => true],
                 ];
                 $validation = new Validation();
                 $validation->validate($_POST, $rules);
@@ -145,15 +155,23 @@ class CustomerController extends BaseController{
 
                 //Add the user
                 $details = [
-                    'surname' => $request->surname,
-                    'firstname' => $request->firstname,
-                    'email' => $request->email,
+                    'name' => $request->name,
+                    'title' => $request->title,
                     'phone' => $request->phone,
+                    'marital_status' => $request->marital_status,
+                    'occupation' => $request->occupation,
                     'address' => $request->address,
-                    'city' => $request->city,
-                    'state' => $request->state,
+                    'dob' => $request->dob,
+                    'sex' => $request->sex,
+                    'image' => $request->image,
+                    'saving_period' => $request->saving_period,
                     'amount' => $request->amount,
-
+                    'purpose' => $request->purpose,
+                    'kin_name' => $request->kin_name,
+                    'kin_address' => $request->kin_address,
+                    'kin_phone' => $request->kin_phone,
+                    'kin_relationship' => $request->kin_relationship,
+                    'office' => $request->office
                 ];
 
                 Customer::where('customer_id', $customer_id)->update($details);
@@ -176,9 +194,7 @@ class CustomerController extends BaseController{
 
         if(Request::has('post')){
             $request = Request::get('post');
-
             if(CSRFToken::verifyCSRFToken($request->token)){
-
                 $customer = Customer::where('customer_id', '=', $customer_id)->first();
                 $customer->delete();
                 Session::add('success', 'Customer deleted successfully');

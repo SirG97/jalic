@@ -6,18 +6,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const profile = document.querySelector('.header-nav-item');
     const ndropdown = document.querySelector('.nav-dropdown');
 
-
     hamburger.addEventListener('click', () =>{
         sidebar.classList.toggle('nav-sidebar-open');
     });
-
     profile.addEventListener('click', () => {
         ndropdown.classList.toggle('active');
     });
     main.addEventListener('click', () =>{
-        // if(sidebar.classList.contains('nav-sidebar-open')){
             sidebar.classList.remove('nav-sidebar-open');
-        
     });
 
     $('#myTab a').on('click', function (e) {
@@ -129,7 +125,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $('.search-result').css('display','none');
     });
 
-
     // Show the edit modal and populate the fields for customer edit
     $('#editModal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Button that triggered the modal
@@ -212,74 +207,61 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // Edit order modal
-    $('#editOrderModal').on('show.bs.modal', function (event) {
+    $('#editCustomerModal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Button that triggered the modal
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         let modal = $(this);
-        modal.find('#order_no').val(button.data('order_no')); // Extract info from data-* attributes
-        modal.find('#request_type').val( button.data('request_type')); // Extract info from data-* attributes
-        modal.find('#district').val(button.data('district')); // Extract info from data-* attributes
-        modal.find('#route').val(button.data('route')); // Extract info from data-* attributes
-        modal.find('#fullname').val(button.data('fullname')); // Extract info from data-* attributes
+        modal.find('#customer_id').val(button.data('customer_id')); // Extract info from data-* attributes
+        modal.find('#name').val( button.data('name')); // Extract info from data-* attributes
+        modal.find('#title').val(button.data('title')); // Extract info from data-* attributes
+        modal.find('#marital_status').val(button.data('marital_status')); // Extract info from data-* attributes
+        modal.find('#dob').val(button.data('dob')); // Extract info from data-* attributes
         modal.find('#email').val(button.data('email')); // Extract info from data-* attributes
-        modal.find('#service_type').val(button.data('service_type')); // Extract info from data-* attributes
         modal.find('#address').val(button.data('address')); // Extract info from data-* attributes
         modal.find('#phone').val(button.data('phone')); // Extract info from data-* attributes
-        modal.find('#parcel_name').val(button.data('parcel_name')); // Extract info from data-* attributes
-        modal.find('#parcel_size').val(button.data('parcel_size')); // Extract info from data-* attributes
-        modal.find('#pick_up_address').val(button.data('pick_up_address')); // Extract info from data-* attributes
-        modal.find('#pick_up_landmark').val(button.data('pick_up_landmark')); // Extract info from data-* attributes
-        modal.find('#delivery_address').val(button.data('delivery_address')); // Extract info from data-* attributes
-        modal.find('#delivery_landmark').val(button.data('delivery_address')); // Extract info from data-* attributes
-        modal.find('#description').val(button.data('description')); // Extract info from data-* attributes
+        modal.find('#sex').val(button.data('sex')); // Extract info from data-* attributes
+        modal.find('#office').val(button.data('office')); // Extract info from data-* attributes
+        modal.find('#occupation').val(button.data('occupation')); // Extract info from data-* attributes
+        modal.find('#saving_period').val(button.data('saving_period')); // Extract info from data-* attributes
+        modal.find('#amount').val(button.data('amount')); // Extract info from data-* attributes
+        modal.find('#purpose').val(button.data('purpose')); // Extract info from data-* attributes
+        modal.find('#kin_name').val(button.data('kin_name')); // Extract info from data-* attributes
+        modal.find('#kin_phone').val(button.data('kin_phone')); // Extract info from data-* attributes
+        modal.find('#kin_address').val(button.data('kin_address')); // Extract info from data-* attributes
+        modal.find('#kin_relationship').val(button.data('kin_relationship')); // Extract info from data-* attributes
 
-        let request = button.data('request_type');
-        if(request === 'collection'){
-            $("#delivery_address, #delivery_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
-            // $("").prop('readonly', true);
-            $("#pick_up_address, #pick_up_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('readonly', false);
-        }else if(request === 'delivery'){
-            $("#pick_up_address, #pick_up_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
-            // $("").prop('readonly', true);
-            $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('disabled', false);
-        }else if(request === 'combo' || request === 'swap'){
-            $("#pick_up_address,#pick_up_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('disabled', false);
-            $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('disabled', false);
-        }
     });
 
-    $('#editOrderBtn').on('click', (e)=>{
+    $('#editCustomerBtn').on('click', (e)=>{
         e.preventDefault();
-        let order_no = $('#order_no').val();
-        const url = `/order/${order_no}/edit`;
+        let customer_id = $('#customer_id').val();
+        const url = `/customer/${customer_id}/edit`;
         const data = {
             token : $('#token').val(),
-            request_type : $('#request_type').val(),
-            service_type : $('#service_type').val(),
+            name : $('#name').val(),
+            title : $('#title').val(),
+            marital_status : $('#marital_status').val(),
+            dob : $('#dob').val(),
             email : $('#email').val(),
-            district : $('#district').val(),
-            route : $('#route').val(),
-            fullname : $('#fullname').val(),
-            address : $('#address').val(),
             phone : $('#phone').val(),
-            parcel_name : $('#parcel_name').val(),
-            parcel_size : $('#parcel_size').val(),
-            pick_up_address : $('#pick_up_address').val(),
-            pick_up_landmark : $('#pick_up_landmark').val(),
-            delivery_address : $('#delivery_address').val(),
-            delivery_landmark : $('#delivery_landmark').val(),
-            description : $('#description').val(),
+            address : $('#address').val(),
+            sex : $('#sex').val(),
+            office : $('#office').val(),
+            occupation : $('#occupation').val(),
+            saving_period : $('#saving_period').val(),
+            amount : $('#amount').val(),
+            purpose : $('#purpose').val(),
+            kin_name : $('#kin_name').val(),
+            kin_phone : $('#kin_phone').val(),
+            kin_address : $('#kin_address').val(),
+            kin_relationship : $('#kin_relationship').val(),
         };
         $.ajax({
             url: url,
             type: 'POST',
             data: data,
             beforeSend: function(){
-                $('#editOrderBtn').html('<i class="fa fa-spinner fa-spin"></i> Please wait...');
+                $('#editCustomerBtn').html('<i class="fa fa-spinner fa-spin"></i> Please wait...');
             },
             success: function (response) {
                 let data = JSON.parse(response);
@@ -309,18 +291,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // show the delete confirmation modal for an order
-    $('#deleteOrderModal').on('show.bs.modal', function (event) {
+    $('#deleteCustomerModal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget); // Button that triggered the modal
-        let order_no = button.data('order_no'); // Extract info from data-* attributes
-        let form_action = `/order/${order_no}/delete`;
+        let customer_id = button.data('customer_id'); // Extract info from data-* attributes
+        let form_action = `/customer/${customer_id}/delete`;
 
         let modal = $(this);
-        modal.find('#orderDeleteForm').attr("action", form_action);
+        modal.find('#customerDeleteForm').attr("action", form_action);
     });
 
-    $('#deleteOrderBtn').on('click', (e)=>{
+    $('#deleteCustomerBtn').on('click', (e)=>{
         e.preventDefault();
-        $("#orderDeleteForm").submit();
+        $("#customerDeleteForm").submit();
     });
 
     // Edit staff modal
@@ -415,20 +397,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     $('#deleteStaffBtn').on('click', (e)=>{
         e.preventDefault();
         $("#staffDeleteForm").submit();
-    });
-
-    $('#deleteAssignedRouteModal').on('show.bs.modal', function (event) {
-        let button = $(event.relatedTarget); // Button that triggered the modal
-        let rider_id = button.data('rider_id'); // Extract info from data-* attributes
-        let form_action = `/assigned_routes/${rider_id}/delete`;
-
-        let modal = $(this);
-        modal.find('#assignedRouteDeleteForm').attr("action", form_action);
-    });
-
-    $('#deleteAssignedRouteBtn').on('click', (e)=>{
-        e.preventDefault();
-        $("#assignedRouteDeleteForm").submit();
     });
 
     $("#request_type").on('change', () => {

@@ -1,5 +1,5 @@
 <?php $_shouldextend[1]=1; ?>
-<?php $this->startSection('title', 'Managers'); ?>
+<?php $this->startSection('title', 'Staff'); ?>
 <?php $this->startSection('icon', 'fa-user-plus'); ?>
 <?php $this->startSection('content'); ?>
 <div class="container-fluid">
@@ -224,8 +224,8 @@
 
  <?php else: ?>
  <tr>
- <td colspan="5">
- <div class="d-flex justify-content-center">No Managers yet</div>
+ <td colspan="6">
+ <div class="d-flex justify-content-center">No Staff yet</div>
  </td>
  </tr>
  <?php endif; ?>
@@ -233,7 +233,6 @@
  </table>
  </div>
  <div class="panel-footer py-1 mt-0 mr-3 d-flex justify-content-end">
- <?php echo $links; ?>
 
  </div>
 

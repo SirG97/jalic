@@ -21,27 +21,17 @@ class UserController extends BaseController {
             Redirect::to('/login');
         }
     }
-     public function get_riders(){
-         $riders = User::where('admin_right','Rider')->orderBy('id','desc')->get();
 
-        return view('user\riders', ['staffs' => $riders]);
-     }
 
-     public function get_support_staff(){
-         $support_staff = User::where('admin_right','Customer Service Adviser')->orderBy('id','desc')->get();
-         return view('user\support_staff', ['staffs' => $support_staff]);
-     }
-
-     public function get_managers(){
-         $managers = User::where('admin_right','Manager')->orderBy('id','desc')->get();
+     public function get_staff(){
+         $managers = User::where('admin_right','staff')->orderBy('id','desc')->get();
          return view('user\managers', ['staffs' => $managers]);
      }
 
-     public function get_staff($id){
+     public function get_single_staff($id){
          $id = $id['staff_id'];
          $profile = User::where('user_id', $id)->first();
-         //dd($profile);
-         return view('user\riders', ['profile' => $profile]);
+         return view('user\managers', ['profile' => $profile]);
      }
 
      public function new_staff_form(){
@@ -58,8 +48,8 @@ class UserController extends BaseController {
                      'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
                      'lastname' => ['string' => true, 'maxLength' => 40],
                      'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true, 'unique' => 'users'],
-                     'city' => ['required' => true, 'maxLength' => '50', 'string' => true],
-                     'state' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                     'branch' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                     'unit_manager' => ['required' => true, 'maxLength' => '50', 'string' => true],
                      'address' => ['required' => true, 'maxLength' => '150'],
                      'password' => ['required' => true,  'minLength' => 5],
                      'admin_right' => ['required' => true, 'maxLength' => 50],
@@ -105,8 +95,8 @@ class UserController extends BaseController {
                      'email' => $request->email,
                      'phone' => $request->phone,
                      'address' => $request->address,
-                     'city' => $request->city,
-                     'state' => $request->state,
+                     'branch' => $request->branch,
+                     'unit_manager' => $request->unit_manager,
                      'password' => password_hash($request->password, PASSWORD_BCRYPT),
                      'admin_right' => $request->admin_right,
                      'job_title' => $request->job_title,
@@ -140,8 +130,8 @@ class UserController extends BaseController {
                      'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
                      'lastname' => ['string' => true, 'maxLength' => 40],
                      'phone' => ['required' => true,'maxLength' => 14,  'number' => true, 'unique_edit' => 'users|' .$user_id .'|user_id'],
-                     'city' => ['required' => true, 'maxLength' => '50', 'string' => true],
-                     'state' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                     'branch' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                     'unit_manager' => ['required' => true, 'maxLength' => '50', 'string' => true],
                      'address' => ['required' => true, 'maxLength' => '150'],
                      'password' => ['minLength' => 5],
                      'admin_right' => ['required' => true, 'maxLength' => 50],

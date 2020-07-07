@@ -56,29 +56,38 @@
  <a href="/customer/<?php echo \htmlentities($customer['customer_id'], ENT_QUOTES, 'UTF-8', false); ?>" ><i class="fas fa-fw fa-eye text-success" title="View customer details"></i></a> &nbsp; &nbsp;
  <i class="fas fa-fw fa-edit text-primary"
  data-toggle="modal"
- data-target="#editModal"
+ data-target="#editCustomerModal"
  title="Edit customer details"
  data-customer_id="<?php echo \htmlentities($customer['customer_id'], ENT_QUOTES, 'UTF-8', false); ?>"
- data-firstname="<?php echo \htmlentities($customer['firstname'], ENT_QUOTES, 'UTF-8', false); ?>"
- data-surname="<?php echo \htmlentities($customer['surname'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-name="<?php echo \htmlentities($customer['name'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-title="<?php echo \htmlentities($customer['title'], ENT_QUOTES, 'UTF-8', false); ?>"
  data-email="<?php echo \htmlentities($customer['email'], ENT_QUOTES, 'UTF-8', false); ?>"
  data-phone="<?php echo \htmlentities($customer['phone'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-saving_period="<?php echo \htmlentities($customer['saving_period'], ENT_QUOTES, 'UTF-8', false); ?>"
  data-amount="<?php echo \htmlentities($customer['amount'], ENT_QUOTES, 'UTF-8', false); ?>"
  data-address="<?php echo \htmlentities($customer['address'], ENT_QUOTES, 'UTF-8', false); ?>"
- data-city="<?php echo \htmlentities($customer['city'], ENT_QUOTES, 'UTF-8', false); ?>"
- data-state="<?php echo \htmlentities($customer['state'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-marital_status="<?php echo \htmlentities($customer['marital_status'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-dob="<?php echo \htmlentities($customer['dob'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-sex="<?php echo \htmlentities($customer['sex'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-occupation="<?php echo \htmlentities($customer['occupation'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-office="<?php echo \htmlentities($customer['office'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-purpose="<?php echo \htmlentities($customer['purpose'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-kin_name="<?php echo \htmlentities($customer['kin_name'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-kin_phone="<?php echo \htmlentities($customer['kin_phone'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-kin_address="<?php echo \htmlentities($customer['kin_address'], ENT_QUOTES, 'UTF-8', false); ?>"
+ data-kin_relationship="<?php echo \htmlentities($customer['kin_relationship'], ENT_QUOTES, 'UTF-8', false); ?>"
  ></i> &nbsp; &nbsp;
  <i class="fas fa-fw fa-trash text-danger"
  title="Delete customer details"
  data-toggle="modal"
- data-target="#deleteModal"
+ data-target="#deleteCustomerModal"
  data-customer_id="<?php echo \htmlentities($customer['customer_id'], ENT_QUOTES, 'UTF-8', false); ?>"></i>
  </td>
 
  </tr>
  <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  <?php /* Edit Modal*/ ?>
- <div class="modal fade bd-example-modal-lg" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+ <div class="modal fade bd-example-modal-lg" id="editCustomerModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
  <div class="modal-dialog modal-lg" role="document">
  <div class="modal-content">
  <div class="modal-header">
@@ -89,93 +98,154 @@
  </div>
  <div class="modal-body">
  <div id="msg" class="d-flex">
-
  </div>
  <form>
  <div class="col-md-12">
  <div class="form-row">
- <input type="hidden" id="customer_id"  value="" required>
- <input type="hidden" id="token" name="token" value="<?php echo \htmlentities(\App\Classes\CSRFToken::_token(), ENT_QUOTES, 'UTF-8', false); ?>">
- <div class="col-md-4 mb-3">
- <label for="firstname">First name</label>
- <input type="text" class="form-control" id="firstname" name="firstname" value="" required>
+ <input type="hidden" name="token" value="<?php echo \htmlentities(\App\Classes\CSRFToken::_token(), ENT_QUOTES, 'UTF-8', false); ?>">
+ <input type="hidden" name="customer_id" id="customer_id" value="">
+ <div class="col-md-2 mb-3">
+ <label for="title">Title</label>
+ <select name="title" id="title" class="custom-select">
+ <option value="<?php echo \htmlentities(\App\Classes\Request::old('post', 'title'), ENT_QUOTES, 'UTF-8', false); ?>">
+ <?php echo \htmlentities(\App\Classes\Request::old('post', 'title') ? : "Title", ENT_QUOTES, 'UTF-8', false); ?>
 
+ </option>
+ <option value="Mr">Mr</option>
+ <option value="Mrs">Mrs</option>
+ <option value="Miss">Miss</option>
+ <option value="Master">Master</option>
+ </select>
  </div>
  <div class="col-md-4 mb-3">
- <label for="surname">Surname</label>
- <input type="text" class="form-control" id="surname" name="surname" value="" required>
+ <label for="name">Name</label>
+ <input type="text" class="form-control" id="name" name="name" value="" required>
+ </div>
+ <div class="col-md-3 mb-3">
+ <label for="marital_status">Marital Status</label>
+ <select id="marital_status" name="marital_status" class="custom-select">
+ <option value="<?php echo \htmlentities(\App\Classes\Request::old('post', 'marital_status'), ENT_QUOTES, 'UTF-8', false); ?>">
+ <?php echo \htmlentities(\App\Classes\Request::old('post', 'marital_status') ? : "Marital Status", ENT_QUOTES, 'UTF-8', false); ?>
 
+ </option>
+ <option value="single">Single</option>
+ <option value="married">Married</option>
+ <option value="divorced">Divorced</option>
+ <option value="widowed">Widowed</option>
+ </select>
  </div>
- <div class="col-md-4 mb-3">
- <label for="email">Email</label>
- <div class="input-group">
- <div class="input-group-prepend">
- <span class="input-group-text" id="inputGroupPrepend3">@</span>
- </div>
- <input type="email" class="form-control" name="email" id="email" aria-describedby="inputGroupPrepend3" required>
-
- </div>
+ <div class="col-md-3 mb-3">
+ <label for="dob">Date of Birth</label>
+ <input type="date" class="form-control" name="dob" id="dob" required>
  </div>
  </div>
  <div class="form-row">
- <div class="col-md-5 mb-3">
- <label for="phone">Phone number</label>
- <input type="text" class="form-control"  name="phone" id="phone" required>
-
- </div>
  <div class="col-md-4 mb-3">
- <label for="city">City</label>
- <input type="text" class="form-control" name="city" id="city" required>
+ <label for="occupation">Occupation</label>
+ <input type="text" class="form-control" name="occupation" id="occupation" required>
 
  </div>
  <div class="col-md-3 mb-3">
- <label for="state">State</label>
- <select class="custom-select" id="state" name="state" required>
- <option selected value="Anambra">Anambra</option>
- <option value="Delta">Delta</option>
- <option value="Enugu">Enugu</option>
- <option value="Ebonyi">Ebonyi</option>
- <option value="Imo">Imo</option>
- <option value="Abia">Abia</option>
+ <label for="email">Email</label>
+ <input type="text" class="form-control"  name="email" id="email" required>
+
+ </div>
+ <div class="col-md-3 mb-3">
+ <label for="phone">Phone</label>
+ <input type="text" class="form-control"  name="phone" id="phone" required>
+
+ </div>
+
+ <div class="col-md-2 mb-3">
+ <label for="sex">Sex</label>
+ <select name="sex" id="sex" class="custom-select">
+ <option value="<?php echo \htmlentities(\App\Classes\Request::old('post', 'sex'), ENT_QUOTES, 'UTF-8', false); ?>">
+ <?php echo \htmlentities(\App\Classes\Request::old('post', 'sex') ? : "Sex", ENT_QUOTES, 'UTF-8', false); ?>
+
+ </option>
+ <option value="Male">Male</option>
+ <option value="Female">Female</option>
  </select>
  </div>
 
  </div>
  <div class="form-row">
+ <div class="col-md-7 mb-3">
+ <label for="address">Address</label>
+ <input type="text" name="address" value="" id="address" class="form-control">
+ </div>
+
  <div class="col-md-5 mb-3">
- <label for="amount">Daily amount</label>
+ <label for="office">Shop/store office</label>
+ <input type="text" class="form-control"  name="office" id="office" required>
+ </div>
+ </div>
+ <div class="form-row">
+ <div class="col-md-3 mb-3">
+ <label for="saving_period">Savings Period</label>
+ <input type="text" name="saving_period" value="" id="saving_period" class="form-control">
+ </div>
+ <div class="col-md-3 mb-3">
+ <label for="amount">Daily savings</label>
  <div class="input-group mb-3">
  <div class="input-group-prepend">
  <span class="input-group-text">&#8358</span>
  </div>
- <input type="text" name="amount" id="amount" value=""  class="form-control" aria-label="Amount (to the nearest dollar)">
+ <input type="text" name="amount" value="500" id="amount"  class="form-control" aria-label="Amount (to the nearest dollar)">
  <div class="input-group-append">
  <span class="input-group-text">.00</span>
  </div>
  </div>
  </div>
-
- <div class="col-md-7 mb-3">
- <label for="state">Address</label>
- <input type="text" class="form-control"  name="address" id="address" required>
+ <div class="col-md-6 mb-3">
+ <label for="purpose">Purpose</label>
+ <input type="text" name="purpose" value="" id="purpose" class="form-control">
  </div>
-
  </div>
+ <h5>Next of kin</h5>
+ <div class="form-row">
+ <div class="col-md-4 mb-3">
+ <label for="kin_name">Name</label>
+ <input type="text" class="form-control" id="kin_name" name="kin_name" value="" required>
+ </div>
+ <div class="col-md-2 mb-3">
+ <label for="kin_address">Address</label>
+ <input type="text" class="form-control" id="kin_address" name="kin_address" required>
+ </div>
+ <div class="col-md-3 mb-3">
+ <label for="kin_phone">Phone</label>
+ <input type="text" class="form-control" id="kin_phone" name="kin_phone" required>
+ </div>
+ <div class="col-md-3 mb-3">
+ <label for="kin_relationship">Relationship</label>
+ <select name="kin_relationship" id="kin_relationship" class="custom-select">
+ <option value="<?php echo \htmlentities(\App\Classes\Request::old('post', 'kin_relationship'), ENT_QUOTES, 'UTF-8', false); ?>">
+ <?php echo \htmlentities(\App\Classes\Request::old('post', 'kin_relationship') ? : "", ENT_QUOTES, 'UTF-8', false); ?>
 
+ </option>
+ <option value="spouse">Spouse</option>
+ <option value="father">Father</option>
+ <option value="mother">Mother</option>
+ <option value="uncle">Uncle</option>
+ <option value="aunt">Aunt</option>
+ <option value="son">Son</option>
+ <option value="daughter">Daughter</option>
+ </select>
+ </div>
+ </div>
  </div>
  </form>
-
  </div>
  <div class="modal-footer">
  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
- <button type="button" class="btn btn-primary" id="editBtn">Save</button>
+ <button type="button" class="btn btn-primary" id="editCustomerBtn">Save</button>
  </div>
  </div>
  </div>
  </div>
 
  <?php /* Delete Modal*/ ?>
- <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+ <div class="modal fade" id="deleteCustomerModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
  <div class="modal-dialog modal-dialog-centered" role="document">
  <div class="modal-content">
  <div class="modal-header">
@@ -202,7 +272,7 @@
  <?php else: ?>
  <tr>
  <td colspan="7">
- <div class="d-flex justify-content-center">No pins generated</div>
+ <div class="d-flex justify-content-center">No customers yet</div>
  </td>
  </tr>
  <?php endif; ?>

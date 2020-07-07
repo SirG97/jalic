@@ -20,6 +20,10 @@ class Customer extends Model{
                             'bank', 'purpose', 'kin_name', 'kin_address', 'kin_phone', 'kin_relationship', 'kin_image',
                             'branch', 'unit_manager', 'unit_manager_phone', 'office', 'user_id'];
 
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
     public function transform($data){
         $customers = [];
         foreach ($data as $item){

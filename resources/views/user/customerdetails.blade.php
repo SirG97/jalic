@@ -1,5 +1,5 @@
 @extends('user.layout.access_role')
-@section('title', 'Order')
+@section('title', 'Customer')
 @section('icon', 'fa-user-plus')
 @section('content')
     <div class="container-fluid">
@@ -8,9 +8,7 @@
                 <div class="custom-panel card ">
                     <div class="d-flex justify-content-between py-2 px-3">
                         <div class="text-secondary mb-1">
-
                             <div class="order-name">{{$customer->name}}</div>
-
                         </div>
                         <div class="font-weight-bold text-secondary mb-1 d-flex justify-content-end">
                             <div class="text-right">

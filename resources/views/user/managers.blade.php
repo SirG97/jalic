@@ -1,5 +1,5 @@
 @extends('user.layout.access_role')
-@section('title', 'Managers')
+@section('title', 'Staff')
 @section('icon', 'fa-user-plus')
 @section('content')
 <div class="container-fluid">
@@ -222,8 +222,8 @@
 
                         @else
                             <tr>
-                                <td colspan="5">
-                                    <div class="d-flex justify-content-center">No Managers yet</div>
+                                <td colspan="6">
+                                    <div class="d-flex justify-content-center">No Staff yet</div>
                                 </td>
                             </tr>
                         @endif
@@ -231,7 +231,7 @@
                     </table>
                 </div>
                 <div class="panel-footer py-1 mt-0 mr-3 d-flex justify-content-end">
-                    {!! $links !!}
+
                 </div>
 
             </div>
