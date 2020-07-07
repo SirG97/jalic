@@ -44,7 +44,7 @@
  <input type="text" class="form-control" name="branch" id="branch" required>
  </div>
  <div class="col-md-3 mb-3">
- <label for="state">Unit</label>
+ <label for="state">Unit manager</label>
  <input type="text" class="form-control" name="unit_manager" id="unit_manager" required>
  </div>
  </div>
@@ -60,9 +60,7 @@
  <label for="admin_right">Priviledge</label>
  <select class="custom-select" id="admin_right" name="admin_right" required>
  <option selected value="Admin">Admin</option>
- <option value="Manager">Manager</option>
- <option value="Customer Service Adviser">Customer Service Adviser</option>
- <option value="Rider">Rider</option>
+ <option value="Staff">Staff</option>
  </select>
  </div>
  <div class="col-md-5 mb-3">

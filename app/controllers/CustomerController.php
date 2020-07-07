@@ -78,7 +78,7 @@ class CustomerController extends BaseController{
 
                 //Add the user
                 $details = [
-                    'customer_id' => Random::generateId(16),
+                    'customer_id' => Random::generateId(10),
                     'name' => $request->name,
                     'title' => $request->title,
                     'phone' => $request->phone,

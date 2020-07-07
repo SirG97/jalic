@@ -311,15 +311,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         let modal = $(this);
         modal.find('#user_id').val( button.data('user_id')); // Extract info from data-* attributes
-        modal.find('#username').val( button.data('username')); // Extract info from data-* attributes
+
         modal.find('#email').val(button.data('email')); // Extract info from data-* attributes
         modal.find('#password').val(button.data('password')); // Extract info from data-* attributes
         modal.find('#firstname').val(button.data('firstname')); // Extract info from data-* attributes
         modal.find('#lastname').val(button.data('lastname')); // Extract info from data-* attributes
         modal.find('#address').val(button.data('address')); // Extract info from data-* attributes
         modal.find('#phone').val(button.data('phone')); // Extract info from data-* attributes
-        modal.find('#city').val(button.data('city')); // Extract info from data-* attributes
-        modal.find('#state').val(button.data('state')); // Extract info from data-* attributes
+        modal.find('#branch').val(button.data('branch')); // Extract info from data-* attributes
+        modal.find('#unit_manager').val(button.data('unit_manager')); // Extract info from data-* attributes
         modal.find('#admin_right').val(button.data('admin_right')); // Extract info from data-* attributes
         modal.find('#job_title').val(button.data('job_title')); // Extract info from data-* attributes
         modal.find('#job_description').val(button.data('job_description')); // Extract info from data-* attributes
@@ -332,15 +332,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         let d = new FormData();
         d.append('token', $('#token').val());
-        d.append('username', $('#username').val());
+
         d.append('firstname', $('#firstname').val());
         d.append('lastname', $('#lastname').val());
         d.append('email', $('#email').val());
         d.append('password', $('#password').val());
         d.append('phone', $('#phone').val());
         d.append('address', $('#address').val());
-        d.append('city', $('#city').val());
-        d.append('state', $('#state').val());
+        d.append('branch', $('#branch').val());
+        d.append('unit_manager', $('#unit_manager').val());
         d.append('admin_right', $('#admin_right').val());
         d.append('job_title', $('#job_title').val());
         d.append('job_description', $('#job_description').val());

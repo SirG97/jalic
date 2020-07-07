@@ -60,9 +60,7 @@
                                             <label for="admin_right">Priviledge</label>
                                             <select class="custom-select" id="admin_right" name="admin_right" required>
                                                 <option selected value="Admin">Admin</option>
-                                                <option value="Manager">Manager</option>
-                                                <option value="Customer Service Adviser">Customer Service Adviser</option>
-                                                <option value="Rider">Rider</option>
+                                                <option value="Staff">Staff</option>
                                             </select>
                                         </div>
                                         <div class="col-md-5 mb-3">
@@ -70,6 +68,7 @@
                                             <input type="text" class="form-control"  name="address" id="address" required>
                                         </div>
                                     </div>
+
                                     <div class="form-row">
 
                                         <div class="col-md-4 mb-3">

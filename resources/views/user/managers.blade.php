@@ -45,21 +45,20 @@
                                 <td class="align-middle">{{ $staff['phone'] }}</td>
                                 <td class="align-middle">{{ $staff['created_at']->diffForHumans() }}</td>
                                     <td class="table-action align-middle">
-                                        <a href="/manager/{{ $staff['user_id'] }}" ><i class="fas fa-fw fa-eye text-success" title="View order details"></i></a> &nbsp; &nbsp;
-                                        <i class="fas fa-fw fa-edit text-primary align-"
+                                        <a href="/staff/{{ $staff['user_id'] }}" ><i class="fas fa-fw fa-eye text-success" title="View order details"></i></a> &nbsp; &nbsp;
+                                        <i class="fas fa-fw fa-edit text-primary align"
                                            data-toggle="modal"
                                            data-target="#editStaffModal"
                                            title="Edit staff details"
                                            data-user_id="{{ $staff['user_id'] }}"
                                            data-firstname="{{ $staff['firstname'] }}"
                                            data-lastname="{{ $staff['lastname'] }}"
-                                           data-username="{{ $staff['username'] }}"
                                            data-email="{{ $staff['email'] }}"
                                            data-password=""
                                            data-phone="{{ $staff['phone'] }}"
                                            data-address="{{ $staff['address'] }}"
-                                           data-city="{{ $staff['city'] }}"
-                                           data-state="{{ $staff['state'] }}"
+                                           data-branch="{{ $staff['branch'] }}"
+                                           data-unit_manager="{{ $staff['unit_manager'] }}"
                                            data-admin_right="{{ $staff['admin_right'] }}"
                                            data-job_title="{{ $staff['job_title'] }}"
                                            data-job_description="{{ $staff['job_description'] }}"
@@ -114,68 +113,51 @@
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="col-md-5 mb-3">
-                                                            <label for="username">Username</label>
-                                                            <input type="text" class="form-control"  name="username" id="username" required>
-                                                        </div>
-                                                        <div class="col-md-4 mb-3">
                                                             <label for="phone">Phone number</label>
                                                             <input type="text" class="form-control"  name="phone" id="phone" required>
-
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <label for="city">Branch</label>
+                                                            <input type="text" class="form-control" name="branch" id="branch" required>
                                                         </div>
                                                         <div class="col-md-3 mb-3">
-                                                            <label for="city">City</label>
-                                                            <input type="text" class="form-control" name="city" id="city" required>
-
+                                                            <label for="state">Unit manager</label>
+                                                            <input type="text" class="form-control" name="unit_manager" id="unit_manager" required>
                                                         </div>
-
-
                                                     </div>
                                                     <div class="form-row">
-                                                        <div class="col-md-3 mb-3">
-                                                            <label for="state">State</label>
-                                                            <select class="custom-select" id="state" name="state" required>
-                                                                <option selected value="Anambra">Anambra</option>
-                                                                <option value="Delta">Delta</option>
-                                                                <option value="Enugu">Enugu</option>
-                                                                <option value="Ebonyi">Ebonyi</option>
-                                                                <option value="Imo">Imo</option>
-                                                                <option value="Abia">Abia</option>
-                                                            </select>
-                                                        </div>
                                                         <div class="col-md-4 mb-3">
                                                             <label for="amount">Password</label>
                                                             <div class="input-group mb-3">
-                                                                <input type="text" name="password" value="" id="password" class="form-control" >
+                                                                <input type="password" name="password" value="" id="password" class="form-control" >
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-5 mb-3">
+                                                        <div class="col-md-3 mb-3">
                                                             <label for="admin_right">Priviledge</label>
                                                             <select class="custom-select" id="admin_right" name="admin_right" required>
                                                                 <option selected value="Admin">Admin</option>
-                                                                <option value="Manager">Manager</option>
-                                                                <option value="Customer Service Adviser">Customer Service Adviser</option>
-                                                                <option value="Rider">Rider</option>
+                                                                <option value="Staff">Staff</option>
                                                             </select>
                                                         </div>
-
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="col-md-3 mb-3">
+                                                        <div class="col-md-5 mb-3">
                                                             <label for="address">Address</label>
                                                             <input type="text" class="form-control"  name="address" id="address" required>
                                                         </div>
-                                                        <div class="col-md-3 mb-3">
+                                                    </div>
+
+                                                    <div class="form-row">
+                                                        <div class="col-md-4 mb-3">
                                                             <label for="job_title">Job title</label>
                                                             <input type="text" class="form-control"  name="job_title" id="job_title" required>
                                                         </div>
-                                                        <div class="col-md-3 mb-3">
+                                                        <div class="col-md-4 mb-3">
                                                             <label for="job_description">Job Description</label>
                                                             <div class="input-group mb-3">
                                                                 <input type="text" name="job_description" value="" id="job_description"  class="form-control" >
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-4 mt-4">
                                                             <label class="custom-file-label" for="profile_pics">Choose file</label>
                                                             <div class="input-group custom-file">
                                                                 <input type="file" name="profile_pics" class="custom-file-input" id="profile_pics">

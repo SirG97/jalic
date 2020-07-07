@@ -31,7 +31,7 @@ class UserController extends BaseController {
      public function get_single_staff($id){
          $id = $id['staff_id'];
          $profile = User::where('user_id', $id)->first();
-         return view('user\managers', ['profile' => $profile]);
+         return view('user\staff', ['profile' => $profile]);
      }
 
      public function new_staff_form(){
@@ -44,7 +44,6 @@ class UserController extends BaseController {
              if(CSRFToken::verifyCSRFToken($request->token)){
                  $rules = [
                      'email' => ['required' => true, 'maxLength' => 30, 'email' => true, 'unique' =>'users'],
-                     'username' => ['required' => true, 'maxLength' => 40, 'string' => true, 'unique' => 'users'],
                      'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
                      'lastname' => ['string' => true, 'maxLength' => 40],
                      'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true, 'unique' => 'users'],
@@ -88,8 +87,7 @@ class UserController extends BaseController {
 
                  //Add the user
                  $details = [
-                     'user_id' => Random::generateId(16),
-                     'username' => $request->username,
+                     'user_id' => Random::generateId(10),
                      'lastname' => $request->lastname,
                      'firstname' => $request->firstname,
                      'email' => $request->email,
@@ -126,7 +124,6 @@ class UserController extends BaseController {
              if(CSRFToken::verifyCSRFToken($request->token, false)){
                  $rules = [
                      'email' => ['required' => true, 'maxLength' => 30, 'email' => true, 'unique_edit' => 'users|' .$user_id .'|user_id'],
-                     'username' => ['required' => true, 'maxLength' => 40, 'string' => true, 'unique_edit' => 'users|' .$user_id .'|user_id'],
                      'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
                      'lastname' => ['string' => true, 'maxLength' => 40],
                      'phone' => ['required' => true,'maxLength' => 14,  'number' => true, 'unique_edit' => 'users|' .$user_id .'|user_id'],
@@ -159,14 +156,14 @@ class UserController extends BaseController {
 
                  //Add the order details to an array
                  //Add the user
-                     $user->username = $request->username;
+
                      $user->lastname = $request->lastname;
                      $user->firstname = $request->firstname;
                      $user->email = $request->email;
                      $user->phone = $request->phone;
                      $user->address = $request->address;
-                     $user->city = $request->city;
-                     $user->state = $request->state;
+                     $user->branch = $request->branch;
+                     $user->unit_manager = $request->manager;
                      $user->admin_right = $request->admin_right;
                      $user->job_title = $request->job_title;
                      $user->job_description = $request->job_description;
