@@ -122,7 +122,7 @@
                         <div class="full-details-item">
                             <div class="d-flex row my-1">
                                 <div class="col-sm-4 order-detail-title">Account number:</div>
-                                <div class="col-sm-8"> {{$customer->account_name}}</div>
+                                <div class="col-sm-8"> {{$customer->account_number}}</div>
                             </div>
                         </div>
                         <div class="full-details-item">

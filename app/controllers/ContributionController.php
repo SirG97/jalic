@@ -14,7 +14,6 @@ use App\Models\Customer;
 use App\Models\Pin;
 use App\Models\Contribution;
 
-
 class ContributionController extends BaseController {
 
     public $table_name = 'contributions';
@@ -46,8 +45,15 @@ class ContributionController extends BaseController {
             if(CSRFToken::verifyCSRFToken($request->token)){
                 //Validation Rules
                 $rules = [
-                    'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11],
-                    'pin' => ['required' => true,'minLength' => '12', 'maxLength' => '12', 'number' => true],
+                    'customer_id' => ['required' => true],
+                    'name' => ['required' => true,'string' => true],
+                    'collected_by' => ['string' => true],
+                    'posted_by' => ['required' => true, 'string' => true],
+                    'amount' => ['required' => true, 'number' => true],
+                    'request_type' => ['required' => true, 'string' => true],
+                    'savings_type' => ['required' => true, 'string' => true],
+                    'collected_on' => ['mixed' => true],
+                    'description' => [ 'mixed' => true],
                 ];
 
                 //Run Validation and return errors
@@ -58,47 +64,41 @@ class ContributionController extends BaseController {
                     return view('user\contribute', ['errors' => $errors]);
                 }
 
-                $is_registered_customer = Customer::where('phone', '=', $request->phone)->first();
+                $is_registered_customer = Customer::where('customer_id', '=', $request->customer_id)->first();
                 if($is_registered_customer == null){
-                    Session::add('error', 'This number is not registered');
+                    Session::add('error', 'This customer details not found');
                     return view('user\contribute');
                 }
+                //get his last contribution and see if it is null, a debit or a credit
+                $last_contribution = Contribution::where('customer_id', $request->customer_id)->latest('id')->first();
+                if($last_contribution == null){
+                    // It means he is a first timer
 
-                //Check if user has been logged for fraud in the last 30 mins
-                $fraud_status = ContributionController::is_fraudulent($request->phone);
+//                    TODO: perform some calculation about the available balance and whetherto add or subtract
+                    Contribution::create([
+                        'contribution_id' => Random::generateId(16),
+                        'customer_id' => $request->customer_id,
+                        'amount' => $request->amount,
+                        'ledger_bal' => $request->amount,
+                        'available_bal' => $request->amount,
+                        'request_type' => $request->request_type,
+                        'savings_type' => $request->savings_type,
+                        'collected_by' => $request->collected_by,
+                        'posted_by' => $request->posted_by,
+                        'collected_on' => $request->collected_on,
+                        'description' => $request->description,
+                        'approval' => 'awaiting approval'
+                    ]);
 
-                // Prevent the user from accessing the service for a brief period of time
-                if($fraud_status == true){
-                    Session::add('error', 'This number has been banned from using this service');
-                    return view('user\contribute');
-                }
-                $encryption = new Encryption();
-//              // Encrypt pin and check for match in databasr
-                $is_pin_valid = Pin::find($encryption->encrypt($request->pin));
-                if($is_pin_valid == NULL){
-                    //Update Fraud table
-                    $fraud_count = ContributionController::update_fraud_count($request->phone);
-                    if($fraud_count === true){
-                        Session::add('error', 'You have been barred from using this service');
-                        return view('user\contribute');
-                    }else{
-                        $error_msg = 'You have only '. $fraud_count . ' trial(s) remaining';
-                        Session::add('error', $error_msg);
-                        return view('user\contribute');
-                    }
-                }elseif ($is_pin_valid->status === 'used'){
-                    $error_msg = 'This pin has already been used';
-                    Session::add('error', $error_msg);
+                    Request::refresh();
+                    Session::add('success', 'Operaation successful successfully');
                     return view('user\contribute');
 
-                } elseif ($is_pin_valid->status === 'pending') {
-                    $error_msg = 'This transaction with this pin is yet to be resolved';
-                    Session::add('error', $error_msg);
-                    return view('user\contribute');
                 }else{
-                    // Log information and make API call to the bank to fulfill the request
-                    ContributionController::mark_contribution($request, $is_registered_customer, $is_pin_valid, false);
+                    Session::add('error', 'Operation unsuccessful');
+                    return view('user\contribute');
                 }
+
             }
         }
     }
@@ -321,13 +321,10 @@ class ContributionController extends BaseController {
             $request->pin = $is_pin_valid->pin;
         }
         $last_contribution = Contribution::where('phone', $request->phone)->latest('id')->first();
-
         $pin_amount = (int)$is_pin_valid->amount;
         $daily_amount = (int)$is_registered_customer->amount;
-
         $points = $pin_amount / $daily_amount;
         if($last_contribution ==  null){
-
             if($points <= 31.0){
                 Contribution::create([
                     'contribution_id' => Random::generateId(16),

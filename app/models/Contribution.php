@@ -11,7 +11,8 @@ class Contribution extends Model{
 
     public $timestamps = true;
 
-    protected $fillable = ['contribution_id','pin', 'phone', 'ledger_bal', 'available_bal', 'points'];
+    protected $fillable = ['contribution_id','customer_id', 'amount', 'request_type', 'savings_type', 'collected_by', 'posted_by',
+                            'approved_by', 'collected_on', 'ledger_bal', 'available_bal', 'description'];
 
     public function transform($data){
         $contributions = [];

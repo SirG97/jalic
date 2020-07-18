@@ -399,51 +399,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $("#staffDeleteForm").submit();
     });
 
-    $("#request_type").on('change', () => {
-        let request = $("#request_type").val();
-        if(request === 'collection'){
-            $("#delivery_address, #delivery_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
-            // $("").prop('readonly', true);
-            $("#pick_up_address, #pick_up_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('readonly', false);
-        }else if(request === 'delivery'){
-            $("#pick_up_address, #pick_up_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
-            // $("").prop('readonly', true);
-            $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('disabled', false);
-        }else if(request === 'combo' || request === 'swap'){
-            $("#pick_up_address,#pick_up_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('disabled', false);
-            $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
-            // $("").prop('disabled', false);
-        }
-    });
+    // $("#request_type").on('change', () => {
+    //     let request = $("#request_type").val();
+    //     if(request === 'collection'){
+    //         $("#delivery_address, #delivery_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
+    //         // $("").prop('readonly', true);
+    //         $("#pick_up_address, #pick_up_landmark").prop('readonly', false).css('cursor', 'text');
+    //         // $("").prop('readonly', false);
+    //     }else if(request === 'delivery'){
+    //         $("#pick_up_address, #pick_up_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
+    //         // $("").prop('readonly', true);
+    //         $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
+    //         // $("").prop('disabled', false);
+    //     }else if(request === 'combo' || request === 'swap'){
+    //         $("#pick_up_address,#pick_up_landmark").prop('readonly', false).css('cursor', 'text');
+    //         // $("").prop('disabled', false);
+    //         $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
+    //         // $("").prop('disabled', false);
+    //     }
+    // });
 
     $('#district').on('change', ()=>{
         // let district = $("#district" + " option:selected").val();
-        let district = $("#district").val();
+        let customer_id = $("#customer_id").val();
         const data = {
-            district: district
+            customer_id: customer_id
         };
         $.ajax({
-            url: `/routes/${district}`,
+            url: `/customers/${customer_id}`,
             type: 'GET',
             data: data,
             beforeSend: function(){
-                $('#route').html('`<option value="">loading</option>`');
+                $('#name').html('`Searching...`');
             },
             success: function (response) {
-                $('#route').html(``);
-                let routes = JSON.parse(response);
+                $('#name').html(``);
+                let customer = JSON.parse(response);
                 console.log(JSON.parse(response));
-                if(routes.length){
-                    $.each(routes, (key, value)=>{
-                        $("#route").append(`<option value="${value.route_id}">${value.name}</option>`);
-                    })
+                if(customer.length){
+                    $("#name").val(`${customer.name}`);
                 }else{
-                    $("#route").append(`<option value="">No routes for district</option>`);
+                    $("#name").append(`Customer not found!`);
                 }
-
             },
             error: function(request, error){
                 let errors = JSON.parse(request.responseText);

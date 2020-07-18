@@ -23,11 +23,11 @@ class CustomerController extends BaseController{
     public function getcustomer($id){
         $customer_id = $id['customer_id'];
         $customer = Customer::where('customer_id', $customer_id)->first();
-        $contributions = Contribution::where('phone', $customer->phone)->count();
+//        $contributions = Contribution::where('phone', $customer->phone)->count();
 
         return view('user\customerdetails', [
                                                     'customer' =>$customer,
-                                                    'contributions' => $contributions,
+//                                                    'contributions' => $contributions,
             ]);
     }
 
@@ -80,6 +80,7 @@ class CustomerController extends BaseController{
                 $details = [
                     'customer_id' => Random::generateId(10),
                     'name' => $request->name,
+                    'email' => $request->email,
                     'title' => $request->title,
                     'phone' => $request->phone,
                     'marital_status' => $request->marital_status,
@@ -156,6 +157,7 @@ class CustomerController extends BaseController{
                 //Add the user
                 $details = [
                     'name' => $request->name,
+                    'email' => $request->email,
                     'title' => $request->title,
                     'phone' => $request->phone,
                     'marital_status' => $request->marital_status,
