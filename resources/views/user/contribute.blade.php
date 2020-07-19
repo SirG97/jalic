@@ -22,7 +22,7 @@
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="name">Customer Name</label>
-                                            <input type="text" class="form-control" id="name" name="name" value="Ayo" readonly>
+                                            <input type="text" class="form-control" id="name" name="name" value="" readonly>
                                         </div>
 
                                     </div>
@@ -34,13 +34,16 @@
                                         <div class="col-md-4 mb-3">
                                             <label for="posted_by">Posted by</label>
                                             <select class="custom-select" id="posted_by" name="posted_by" required>
-                                                <option value="{{ \App\Classes\Request::old('post', 'posted_by') }}">
-                                                    {{ \App\Classes\Request::old('post', 'posted_by') ? : ""}}
-                                                </option>
-                                                <option value="sameday">Same day delivery</option>
-                                                <option value="nextday">Next day delivery</option>
-                                                <option value="twoday">Two day delivery</option>
-                                                <option value="premium">Premium service</option>
+                                                @if(!empty($staff) && count($staff) > 0)
+                                                    <option value="{{ \App\Classes\Request::old('post', 'posted_by') }}">
+                                                        {{ \App\Classes\Request::old('post', 'posted_by') ? : ""}}
+                                                    </option>
+                                                    @foreach($staff as $s)
+                                                        <option value={{$s->user_id}}>{{$s->firstname}} {{$s->lastname}}</option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="" disabled selected>Create a district first</option>
+                                                @endif
                                             </select>
                                         </div>
                                         <div class="col-md-4 mb-3">
@@ -50,31 +53,25 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="d-block">Request type</label><br>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="request_type_d" name="request_type" class="custom-control-input">
-                                                <label class="custom-control-label" for="request_type_d">Debit</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="request_type" name="request_type" class="custom-control-input">
-                                                <label class="custom-control-label" for="request_type">Credit</label>
-                                            </div>
-
+                                            <label for="request_type">Request type</label><br>
+                                            <select class="custom-select" id="request_type" name="request_type" required>
+                                                <option value="{{ \App\Classes\Request::old('post', 'request_type') }}">
+                                                    {{ \App\Classes\Request::old('post', 'request_type') ? : ""}}
+                                                </option>
+                                                <option value="credit">credit</option>
+                                                <option value="debit">debit</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="s-block">Savings type</label><br>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="savings_type_s" name="savings_type" class="custom-control-input">
-                                                <label class="custom-control-label" for="savings_type_s">Savings</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="savings_type_l" name="savings_type" class="custom-control-input">
-                                                <label class="custom-control-label" for="savings_type_l">Loan</label>
-                                            </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="savings_type_p" name="savings_type" class="custom-control-input">
-                                                <label class="custom-control-label" for="savings_type_p">Property</label>
-                                            </div>
+                                            <label for="savings_type">Savings type</label><br>
+                                            <select class="custom-select" id="savings_type" name="savings_type" required>
+                                                <option value="{{ \App\Classes\Request::old('post', 'savings_type') }}">
+                                                    {{ \App\Classes\Request::old('post', 'savings_type') ? : ""}}
+                                                </option>
+                                                <option value="savings">savings</option>
+                                                <option value="loan">loan</option>
+                                                <option value="property">property</option>
+                                            </select>
                                         </div>
                                     </div>
 

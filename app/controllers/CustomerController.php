@@ -20,6 +20,18 @@ class CustomerController extends BaseController{
         return view('user\customers', ['customers' => $customers]);
     }
 
+    public function verifycustomer($id){
+        $customer_id = $id['customer_id'];
+        $customer = Customer::where('customer_id', $customer_id)->first();
+        if($customer !== null){
+            echo json_encode(['success' => $customer]);
+            exit();
+        }else{
+            echo json_encode(['error' => 'No result found']);
+            exit();
+        }
+    }
+
     public function getcustomer($id){
         $customer_id = $id['customer_id'];
         $customer = Customer::where('customer_id', $customer_id)->first();

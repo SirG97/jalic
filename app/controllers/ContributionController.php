@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Classes\Encryption;
+use App\Models\User;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Classes\CSRFToken;
 use App\Classes\Random;
@@ -36,7 +37,8 @@ class ContributionController extends BaseController {
     }
 
     public function contribute_form(){
-        return view('user\contribute');
+        $staff = User::all();
+        return view('user\contribute', ['staff' => $staff]);
     }
 
     public function contribute(){
@@ -47,8 +49,8 @@ class ContributionController extends BaseController {
                 $rules = [
                     'customer_id' => ['required' => true],
                     'name' => ['required' => true,'string' => true],
-                    'collected_by' => ['string' => true],
-                    'posted_by' => ['required' => true, 'string' => true],
+                    'collected_by' => ['mixed' => true],
+                    'posted_by' => ['required' => true, 'mixed' => true],
                     'amount' => ['required' => true, 'number' => true],
                     'request_type' => ['required' => true, 'string' => true],
                     'savings_type' => ['required' => true, 'string' => true],
@@ -75,19 +77,21 @@ class ContributionController extends BaseController {
                     // It means he is a first timer
 
 //                    TODO: perform some calculation about the available balance and whetherto add or subtract
+                    $amount = (int)$request->amount;
+                    $available_balance = $amount - ($amount * 0.10);
                     Contribution::create([
                         'contribution_id' => Random::generateId(16),
                         'customer_id' => $request->customer_id,
-                        'amount' => $request->amount,
-                        'ledger_bal' => $request->amount,
-                        'available_bal' => $request->amount,
+                        'amount' => $amount,
+                        'ledger_bal' => $amount,
+                        'available_bal' => $available_balance,
                         'request_type' => $request->request_type,
                         'savings_type' => $request->savings_type,
                         'collected_by' => $request->collected_by,
                         'posted_by' => $request->posted_by,
                         'collected_on' => $request->collected_on,
                         'description' => $request->description,
-                        'approval' => 'awaiting approval'
+                        'status' => 'awaiting approval'
                     ]);
 
                     Request::refresh();
@@ -95,8 +99,26 @@ class ContributionController extends BaseController {
                     return view('user\contribute');
 
                 }else{
-                    Session::add('error', 'Operation unsuccessful');
-                    return view('user\contribute');
+                    $current_amount = $last_contribution->ledger_bal + (int)$request->amount;
+                    $current_available = $current_amount -($current_amount * 0.10);
+                    //dd($current_available);
+                    Contribution::create([
+                        'contribution_id' => Random::generateId(16),
+                        'customer_id' => $request->customer_id,
+                        'amount' => $request->amount,
+                        'ledger_bal' => $current_amount,
+                        'available_bal' => $current_available,
+                        'request_type' => $request->request_type,
+                        'savings_type' => $request->savings_type,
+                        'collected_by' => $request->collected_by,
+                        'posted_by' => $request->posted_by,
+                        'collected_on' => $request->collected_on,
+                        'description' => $request->description,
+                        'status' => 'awaiting approval'
+                    ]);
+                    Session::add('success', 'Operation unsuccessful');
+                    Redirect::to('/contribute');
+                    exit();
                 }
 
             }

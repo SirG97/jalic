@@ -419,27 +419,29 @@ document.addEventListener('DOMContentLoaded', (event) => {
     //     }
     // });
 
-    $('#district').on('change', ()=>{
+    $('#customer_id').on('keyup', ()=>{
         // let district = $("#district" + " option:selected").val();
         let customer_id = $("#customer_id").val();
+        console.log(customer_id);
         const data = {
             customer_id: customer_id
         };
         $.ajax({
-            url: `/customers/${customer_id}`,
+            url: `/verifycustomer/${customer_id}`,
             type: 'GET',
             data: data,
             beforeSend: function(){
-                $('#name').html('`Searching...`');
+                $('#name').val('Searching...');
             },
             success: function (response) {
                 $('#name').html(``);
                 let customer = JSON.parse(response);
                 console.log(JSON.parse(response));
-                if(customer.length){
-                    $("#name").val(`${customer.name}`);
+
+                if(customer.success){
+                    $("#name").val(customer.success.name);
                 }else{
-                    $("#name").append(`Customer not found!`);
+                    $("#name").val(`Customer not found!`);
                 }
             },
             error: function(request, error){
