@@ -51,6 +51,7 @@ $router->map('GET', '/mark_contribution', '\App\Controllers\ContributionControll
 $router->map('POST', '/contribute', '\App\Controllers\ContributionController@contribute', 'contribute');
 $router->map('GET', '/contributions/[:terms]/search', '\App\Controllers\ContributionController@search_contribution', 'search_contribution');
 $router->map('GET', '/message', '\App\Controllers\ContributionController@message', 'message');
+$router->map('POST', '/sendsms', '\App\Controllers\ContributionController@send_sms', 'send_message');
 
 // Settings
 $router->map('GET', '/settings', '\App\Controllers\SettingsController@showSettings', 'show_settings');

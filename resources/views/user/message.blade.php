@@ -10,32 +10,37 @@
                     <div class="font-weight-bold text-secondary mb-1 py-3 px-3">
                         Message
                     </div>
-                    <div class="container">
-                        <div class="row trx-bg-head py-3" style="border-top: 1px solid #e3e8ee; border-bottom: 1px solid #e3e8ee">
-                            <div class="col-md-4 offset-md-3">
-                                <div class="form-group">
-                                    <label for="numbers" class="">Customer ID</label>
-                                    <input type="text" class="form-control" value="" id="customer_id" name="customer_id">
-                                </div>
-                                <div class="form-group">
-                                    <label for="numbers" class="">Name</label>
-                                    <input type="text" class="form-control" value="" id="name" name="name" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label for="numbers" class="">Number</label>
-                                    <input type="text" class="form-control" value="" id="numbers" name="number">
-                                </div>
+                    <form action="/sendsms" method="POST">
+                        <div class="container">
 
-                                <div class="form-group">
-                                    <label for="message" class="">Message</label>
-                                    <textarea class="form-control" id="message" name="messsage"></textarea>
+                            @include('includes\message')
+                            <div class="row trx-bg-head py-3" style="border-top: 1px solid #e3e8ee; border-bottom: 1px solid #e3e8ee">
+                                <div class="col-md-4 offset-md-3">
+                                    <div class="form-group">
+                                        <input type="hidden" name="token" value="{{\App\Classes\CSRFToken::_token()}}">
+                                        <label for="numbers" class="">Customer ID</label>
+                                        <input type="text" class="form-control" value="" id="customer_id" name="customer_id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numbers" class="">Name</label>
+                                        <input type="text" class="form-control" value="" id="name" name="name" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numbers" class="">Number</label>
+                                        <input type="text" class="form-control" value="" id="number" name="number">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message" class="">Message</label>
+                                        <textarea class="form-control" id="message" name="message"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel-footer py-2 mt-2 mr-3 d-flex justify-content-end">
-                        <div class="btn btn-primary btn-sm px-3">Send</div>
-                    </div>
+                        <div class="panel-footer py-2 mt-2 mr-3 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary btn-sm px-3">Send</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 

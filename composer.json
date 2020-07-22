@@ -16,7 +16,8 @@
         "illuminate/database": "^7.16",
         "tecnickcom/tc-lib-barcode": "1.15",
       "ext-gd": "*",
-        "illuminate/pagination": "^7.21"
+        "illuminate/pagination": "^7.21",
+      "ext-curl": "*"
     },
     "autoload":{
         "psr-4":{

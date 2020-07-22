@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 if(customer.success){
                     $("#name").val(customer.success.name);
-
+                    $("#number").val(customer.success.phone);
                 }else{
                     $("#name").val(`Customer not found!`);
                 }
