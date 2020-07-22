@@ -116,6 +116,10 @@ body {
     text-decoration: none;
 }
 
+.contribution-active{
+    background-color: white;
+}
+
 .active{
     background-color: white;
     width: 250px;
@@ -410,6 +414,10 @@ header{
 }
 
 .customer-nav > .nav-link.active{
+    border-bottom: 2px solid #007bff;
+}
+
+.contribution-nav > .nav-link.contribution-active{
     border-bottom: 2px solid #007bff;
 }
 

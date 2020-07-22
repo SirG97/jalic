@@ -53,7 +53,7 @@ class UserController extends BaseController {
                      'password' => ['required' => true,  'minLength' => 5],
                      'admin_right' => ['required' => true, 'maxLength' => 50],
                      'job_title' => ['required' => true, 'maxLength' => 100],
-                     'job_description' => ['required' => true,  'maxLength' => 150]
+                     'job_description' => ['maxLength' => 150]
                  ];
                  $validation = new Validation();
                  $validation->validate($_POST, $rules);
@@ -133,7 +133,7 @@ class UserController extends BaseController {
                      'password' => ['minLength' => 5],
                      'admin_right' => ['required' => true, 'maxLength' => 50],
                      'job_title' => ['required' => true, 'maxLength' => 100],
-                     'job_description' => ['required' => true,  'maxLength' => 150]
+                     'job_description' => ['maxLength' => 150]
                  ];
 
                  $validation = new Validation();

@@ -127,6 +127,10 @@ class AuthController{
 
     }
 
+    public function change_password(){
+
+    }
+
     public function logout(){
         if(isAuthenticated()){
             Session::remove('SESSION_USER_ID');

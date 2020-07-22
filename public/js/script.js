@@ -399,25 +399,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $("#staffDeleteForm").submit();
     });
 
-    // $("#request_type").on('change', () => {
-    //     let request = $("#request_type").val();
-    //     if(request === 'collection'){
-    //         $("#delivery_address, #delivery_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
-    //         // $("").prop('readonly', true);
-    //         $("#pick_up_address, #pick_up_landmark").prop('readonly', false).css('cursor', 'text');
-    //         // $("").prop('readonly', false);
-    //     }else if(request === 'delivery'){
-    //         $("#pick_up_address, #pick_up_landmark").prop('readonly', true).val('').css('cursor', 'not-allowed');
-    //         // $("").prop('readonly', true);
-    //         $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
-    //         // $("").prop('disabled', false);
-    //     }else if(request === 'combo' || request === 'swap'){
-    //         $("#pick_up_address,#pick_up_landmark").prop('readonly', false).css('cursor', 'text');
-    //         // $("").prop('disabled', false);
-    //         $("#delivery_address, #delivery_landmark").prop('readonly', false).css('cursor', 'text');
-    //         // $("").prop('disabled', false);
-    //     }
-    // });
 
     $('#customer_id').on('keyup', ()=>{
         // let district = $("#district" + " option:selected").val();
@@ -440,6 +421,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 if(customer.success){
                     $("#name").val(customer.success.name);
+
                 }else{
                     $("#name").val(`Customer not found!`);
                 }
@@ -460,6 +442,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     });
 
+
+    // show the delete confirmation modal for an order
+    $('#approveTransaction').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget); // Button that triggered the modal
+        let customer_id = button.data('id'); // Extract info from data-* attributes
+        console.log(customer_id);
+        // let form_action = `/customer/${customer_id}/delete`;
+
+        let modal = $(this);
+        modal.find('#contribution_id').val( button.data('id'));
+    });
+
+    $("#approveBtn").on('click', (e)=>{
+        e.preventDefault();
+        $("#approveForm").submit();
+    });
+
+
     function alertMessage(status, message){
         return `<div class="alert alert-${status} m-t-20 alert-dismissible fade show" role="alert">
                     ${message}
@@ -471,5 +471,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
             $(".alert").alert('close');
         }, duration);
     }
+
 
 });

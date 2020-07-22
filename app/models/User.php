@@ -14,4 +14,7 @@ class User extends Model{
     protected $fillable = ['user_id', 'lastname', 'firstname', 'email', 'password',
                             'admin_right', 'job_description', 'job_title', 'image','branch', 'unit_manager', 'address',
                             'online_status', 'phone'];
+    public function contributions(){
+        return $this->hasMany(Contribution::class,'posted_by',  'user_id');
+    }
 }

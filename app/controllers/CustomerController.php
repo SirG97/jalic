@@ -35,11 +35,58 @@ class CustomerController extends BaseController{
     public function getcustomer($id){
         $customer_id = $id['customer_id'];
         $customer = Customer::where('customer_id', $customer_id)->first();
-//        $contributions = Contribution::where('phone', $customer->phone)->count();
+        $contributions = Contribution::where('customer_id', $customer_id)->with(['user'])->get();
+
+        $total_contribution = Contribution::where([
+            ['customer_id', '=' , $customer_id],
+            ['request_type', '=' , 'credit'],
+            ['savings_type', '!=' , 'loan'],
+        ])->get();
+        $total = 0;
+        for($i = 0; $i < count($total_contribution); $i++){
+            $total = $total + (int)$total_contribution[$i]->amount;
+        }
+
+
+        $withdrawn = Contribution::where([
+            ['customer_id', '=' , $customer_id],
+            ['request_type', '=' , 'debit'],
+            ['savings_type', '!=' , 'loan']
+        ])->get();
+
+        $total_withdrawn = 0;
+        for($i = 0; $i < count($withdrawn); $i++){
+            $total_withdrawn = $total_withdrawn + (int)$withdrawn[$i]->amount;
+        }
+        $balance = Contribution::where([
+            ['customer_id', '=' , $customer_id],
+        ])->latest('id')->value('balance');
+
+
+        $loan = Contribution::where([
+            ['customer_id', '=' , $customer_id],
+            ['savings_type', '=' , 'loan']
+        ])->latest('id')->value('loan');
+
+        $service_charge = Contribution::where([
+            ['customer_id', '=' , $customer_id],
+            ['request_type', '=' , 'credit'],
+            ['savings_type', '!=' , 'loan']
+        ])->get();
+
+        $total_service_charge = 0;
+        for($i = 0; $i < count($service_charge); $i++){
+            $total_service_charge = $total_service_charge + (int)$service_charge[$i]->gain;
+        }
 
         return view('user\customerdetails', [
                                                     'customer' =>$customer,
-//                                                    'contributions' => $contributions,
+                                                    'contributions' => $contributions,
+                                                    'withdrawn' => $total_withdrawn,
+                                                    'total' => $total,
+                                                    'balance' => $balance,
+                                                    'loan' => $loan,
+                                                    'service_charge' => $total_service_charge
             ]);
     }
 
@@ -69,7 +116,7 @@ class CustomerController extends BaseController{
                     'dob' => ['mixed' => true],
                     'sex' => ['maxLength' => 10,  'string' => true],
                     'image' => ['string' => true],
-                    'saving_period' => ['required' => true, 'string' => true],
+                    'saving_period' => ['required' => true],
                     'amount' => ['required' => true,  'number' => true],
                     'account_number' => ['number' => true],
                     'amount' => ['required' => true,  'number' => true],

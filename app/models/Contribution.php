@@ -11,8 +11,12 @@ class Contribution extends Model{
 
     public $timestamps = true;
 
-    protected $fillable = ['contribution_id','customer_id', 'amount', 'request_type', 'savings_type', 'collected_by', 'posted_by',
-                            'approved_by', 'collected_on', 'ledger_bal', 'available_bal', 'description', 'status'];
+    protected $fillable = ['contribution_id','customer_id', 'amount', 'request_type', 'savings_type', 'collected_by',
+                        'posted_by', 'approved_by', 'collected_on', 'balance', 'gain', 'loan', 'description', 'status'];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'posted_by', 'user_id');
+    }
 
     public function transform($data){
         $contributions = [];

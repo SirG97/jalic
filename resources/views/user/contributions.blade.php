@@ -20,38 +20,48 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <nav class="nav nav-tabs contribution-nav mr-2">
+                    <a class="nav-link contribution-active"  href="/contributions">Approved</a>
+                    <a class="nav-link"  href="/unapproved">Unapproved</a>
+                </nav>
                 <div class="custom-panel card py-2">
                     <div class="font-weight-bold text-secondary mb-1 py-3 px-3">
-                        Contributions
+                        Approved Transactions
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover ">
                             <thead class="trx-bg-head text-secondary py-3 px-3">
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Phone</th>
+                                <th scope="col">Customer ID</th>
                                 <th scope="col">Amount</th>
-                                <th scope="col">Available balance</th>
+                                <th scope="col">Credit/Debit</th>
+                                <th scope="col">Savings type</th>
+                                <th scope="col">Balance</th>
                                 <th scope="col">Collected by</th>
+                                <th scope="col">Posted by</th>
                                 <th scope="col">Date</th>
+
                             </tr>
                             </thead>
                             <tbody>
                                 @if(!empty($contributions) && count($contributions) > 0)
                                     @foreach($contributions as $contribution)
                                     <tr>
-                                        <td scope="row">{{ $contribution['pin'] }}</td>
-                                        <td>{{ $contribution['phone'] }}</td>
-                                        <td>{{ $contribution['ledger_bal'] }}</td>
-                                        <td>{{ $contribution['available_bal'] }}</td>
-                                        <td>{{ $contribution['points'] }}</td>
+                                        <td scope="row">{{ $contribution['customer_id'] }}</td>
+                                        <td>{{ $contribution['amount'] }}</td>
+                                        <td>{{ $contribution['request_type'] }}</td>
+                                        <td>{{ $contribution['savings_type'] }}</td>
+                                        <td>{{ $contribution['balance'] }}</td>
+                                        <td>{{ $contribution['collected_by'] }}</td>
+                                        <td>{{ $contribution->user['firstname'] }} {{$contribution->user['lastname']}}</td>
                                         <td>{{ $contribution['created_at'] }}</td>
+
                                     </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="5">
-                                            <div class="d-flex justify-content-center">No Contributions yet</div>
+                                        <td colspan="7">
+                                            <div class="d-flex justify-content-center">No Approved Transactions yet</div>
                                         </td>
                                     </tr>
                                 @endif

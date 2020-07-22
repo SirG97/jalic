@@ -14,6 +14,7 @@ $router->map('POST', '/register', '\App\Controllers\AuthController@register', 'r
 $router->map('GET', '/login', '\App\Controllers\AuthController@show', 'login');
 $router->map('POST', '/login', '\App\Controllers\AuthController@login', 'auth');
 $router->map('GET', '/logout', '\App\Controllers\AuthController@logout', 'logout');
+$router->map('GET', '/changepassword', '\App\Controllers\AuthController@changepassword', 'change_password');
 
 // Dashboard
 $router->map('GET', '/dashboard', '\App\Controllers\DashboardController@show', 'dashboard');
@@ -44,9 +45,12 @@ $router->map('POST', '/staff/[:user_id]/delete', '\App\Controllers\UserControlle
 
 //Contributions
 $router->map('GET', '/contributions', '\App\Controllers\ContributionController@get_all', 'contributions');
+$router->map('GET', '/unapproved', '\App\Controllers\ContributionController@unapproved', 'unapproved');
+$router->map('POST', '/transaction/approve', '\App\Controllers\ContributionController@approve', 'approve');
 $router->map('GET', '/mark_contribution', '\App\Controllers\ContributionController@contribute_form', 'contribute_form');
 $router->map('POST', '/contribute', '\App\Controllers\ContributionController@contribute', 'contribute');
 $router->map('GET', '/contributions/[:terms]/search', '\App\Controllers\ContributionController@search_contribution', 'search_contribution');
+$router->map('GET', '/message', '\App\Controllers\ContributionController@message', 'message');
 
 // Settings
 $router->map('GET', '/settings', '\App\Controllers\SettingsController@showSettings', 'show_settings');
