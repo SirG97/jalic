@@ -7,7 +7,7 @@
 if(!isset($_SESSION)) session_start();
 
 //Load environment variable
-//require_once __DIR__ . '/../App/Config/_env.php';
+require_once __DIR__ . '/../App/Config/_env.php';
 
 // Instantiate database class for the application
 new App\Classes\Database();
