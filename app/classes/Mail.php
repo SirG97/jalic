@@ -21,8 +21,8 @@ class Mail{
         $this->mail->SMTPAuth = true;
         $this->mail->SMTPSecure = 'tls';
 
-        $this->mail->Host = getenv('SMTP_HOST');
-        $this->mail->Port = getenv('SMTP_PORT');
+        $this->mail->Host = 'smtp.sendgrid.net';
+        $this->mail->Port = '587';
 
         $environment = getenv('APP_ENV');
         if($environment === 'local'){
@@ -30,13 +30,13 @@ class Mail{
         }
 
         // Authentication info
-        $this->mail->Username = getenv('EMAIL_USERNAME');
-        $this->mail->Password = getenv('EMAIL_PASSWORD');
+        $this->mail->Username = 'sarge97';
+        $this->mail->Password = 'rrwcscrz1';
 
         $this->mail->isHTML(true);
 
         // Sender information
-        $this->mail->setFrom(getenv('ADMIN_EMAIL'), getenv('APP_NAME'));
+        $this->mail->setFrom('sirgittarus@gmail.com', 'jalic');
        // $this->mail->FromName = getenv('APP_NAME');
     }
 
