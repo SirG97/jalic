@@ -25,15 +25,15 @@ class DashboardController extends BaseController{
         $total_customers = Customer::all()->count();
 
         // Total completed
-        $total_completed = Order::where('order_status', '=', ['completed', 'delivered'])->count();
-
-        // Total ongoing
-        $total_ongoing = Order::where('order_status', 'ongoing')->count();
-
-        // Total pot
-        $total_pot = Order::where('order_status', '=', ['uncompleted', 'abandoned'])->count();
-
-        $latest_order = Order::take(15)->orderBy('id', 'desc')->get();
+//        $total_completed = Order::where('order_status', '=', ['completed', 'delivered'])->count();
+//
+//        // Total ongoing
+//        $total_ongoing = Order::where('order_status', 'ongoing')->count();
+//
+//        // Total pot
+//        $total_pot = Order::where('order_status', '=', ['uncompleted', 'abandoned'])->count();
+//
+//        $latest_order = Order::take(15)->orderBy('id', 'desc')->get();
 //        // Total revenue generated
 //
 //        $total_saved_available = "SELECT SUM(available_bal) total FROM contributions";
