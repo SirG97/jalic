@@ -43,7 +43,7 @@ class Mail{
     public function send($data){
         $this->mail->addAddress($data['to'], $data['name']);
         $this->mail->Subject = $data['subject'];
-//        $this->mail->Body = make($data['view'], array('data' =>$data['body']));
+        $this->mail->Body = make($data['view'], array('data' =>$data['body']));
 
         return $this->mail->send();
     }
