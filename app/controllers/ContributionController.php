@@ -30,13 +30,13 @@ class ContributionController extends BaseController {
     public function get_all($page=null){
         $contributions = Contribution::where('status', 'approved')->with(['user'])->get();
 
-        return view('user\contributions', ['contributions' => $contributions]);
+        return view('user.contributions', ['contributions' => $contributions]);
     }
 
     public function unapproved(){
         $contributions = Contribution::where('status','!=', 'approved')->with(['user'])->get();
 
-        return view('user\unapproved', ['contributions' => $contributions]);
+        return view('user.unapproved', ['contributions' => $contributions]);
     }
 
     public function approve(){
@@ -75,7 +75,7 @@ class ContributionController extends BaseController {
 
     public function contribute_form(){
         $staff = User::all();
-        return view('user\contribute', ['staff' => $staff]);
+        return view('user.contribute', ['staff' => $staff]);
     }
 
     public function contribute(){
@@ -99,7 +99,7 @@ class ContributionController extends BaseController {
                 $validation->validate($_POST, $rules);
                 if($validation->hasError()){
                     $errors = $validation->getErrorMessages();
-                    return view('user\contribute', ['errors' => $errors]);
+                    return view('user.contribute', ['errors' => $errors]);
                 }
 
                 $is_registered_customer = Customer::where('customer_id', '=', $request->customer_id)->first();
@@ -134,16 +134,16 @@ class ContributionController extends BaseController {
                             ]);
                             Request::refresh();
                             Session::add('success', 'Account credited successfully');
-                            return view('user\contribute');
+                            return view('user.contribute');
                         }elseif($request->savings_type === 'loan'){
                             Request::refresh();
                             Session::add('error', 'You have no loan to payback');
-                            return view('user\contribute');
+                            return view('user.contribute');
                         }else{
                             //bad request
                             Request::refresh();
                             Session::add('error', 'This request is not understood');
-                            return view('user\contribute');
+                            return view('user.contribute');
                         }
                     }elseif($request->request_type === 'debit'){
                         if($request->savings_type === 'savings' or $request->savings_type === 'property'){
@@ -231,7 +231,7 @@ class ContributionController extends BaseController {
                             ]);
                             Request::refresh();
                             Session::add('success', 'Account credited successfully');
-                            return view('user\contribute');
+                            return view('user.contribute');
                         }elseif($request->savings_type === 'loan'){
                             if((int)$last_contribution->loan > 0 and (int)$request->amount <= (int)$last_contribution->loan){
                                 $loan_balance = $last_contribution->loan - $request->amount;
@@ -255,14 +255,14 @@ class ContributionController extends BaseController {
                                 Redirect::to('/mark_contribution');
                             }else{
                                 Session::add('error', 'The amount you want to pay back is bigger than the loan');
-                                return view('user\contribute');
+                                return view('user.contribute');
                             }
 
                         }else{
                             //bad request
                             Request::refresh();
                             Session::add('error', 'This request is not understood');
-                            return view('user\contribute');
+                            return view('user.contribute');
                         }
                     }elseif($request->request_type === 'debit'){
                         if($request->savings_type === 'savings' or $request->savings_type === 'property'){
@@ -329,7 +329,7 @@ class ContributionController extends BaseController {
     }
 
     public  function message(){
-        return view('user\message');
+        return view('user.message');
     }
 
     public function search_contribution($terms){
@@ -365,7 +365,7 @@ class ContributionController extends BaseController {
                 $validation->validate($_POST, $rules);
                 if($validation->hasError()){
                     $errors = $validation->getErrorMessages();
-                    return view('user\message', ['errors' => $errors]);
+                    return view('user.message', ['errors' => $errors]);
                 }
 
                 $is_registered_customer = Customer::where('customer_id', '=', $request->customer_id)->first();

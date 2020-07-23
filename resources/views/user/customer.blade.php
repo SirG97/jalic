@@ -13,7 +13,7 @@
                     <div class="container">
                         <div class="row cool-border trx-bg-head py-3">
                             <div class="col-md-10 offset-md-1">
-                                @include('includes\message')
+                                @include('includes.message')
                                 <h6 class="text-primary">Biodata</h6>
                                     <div class="form-row">
                                         <input type="hidden" name="token" value="{{\App\Classes\CSRFToken::_token()}}">

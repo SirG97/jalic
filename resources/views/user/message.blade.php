@@ -13,7 +13,7 @@
                     <form action="/sendsms" method="POST">
                         <div class="container">
 
-                            @include('includes\message')
+                            @include('includes.message')
                             <div class="row trx-bg-head py-3" style="border-top: 1px solid #e3e8ee; border-bottom: 1px solid #e3e8ee">
                                 <div class="col-md-4 offset-md-3">
                                     <div class="form-group">

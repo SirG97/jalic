@@ -41,7 +41,7 @@ class AuthController{
                 $validation->validate($_POST, $rules);
                 if($validation->hasError()){
                     $errors = $validation->getErrorMessages();
-                    return view('user\login', ['errors' => $errors]);
+                    return view('user.login', ['errors' => $errors]);
                 }
 
                 $user = User::where('email', $request->email)->first();
@@ -49,7 +49,7 @@ class AuthController{
 
                      if(!password_verify($request->password, $user->password)){
                         Session::add('error', 'incorrect password');
-                        return view('user\login');
+                        return view('user.login');
                      }else{
                          Session::add('SESSION_USER_ID', $user->user_id);
                          Session::add('SESSION_USERNAME', $user->firstname);
@@ -65,12 +65,12 @@ class AuthController{
                      }
                  }else{
                      Session::add('error', 'Invalid credentials');
-                     return view('user\login');
+                     return view('user.login');
                  }
 
 //                Session::add('success', 'user created successfully');
                 Session::add('error', 'An error occured');
-                return view('user\login');
+                return view('user.login');
 
             }
 
@@ -82,7 +82,7 @@ class AuthController{
 
     public function showRegister(){
 
-        return view('user\register', ['success' => '','errors' => []]);
+        return view('user.register', ['success' => '','errors' => []]);
 
     }
 
@@ -102,7 +102,7 @@ class AuthController{
                 $validation->validate($_POST, $rules);
                 if($validation->hasError()){
                     $errors = $validation->getErrorMessages();
-                    return view('user\register', ['errors' => $errors]);
+                    return view('user.register', ['errors' => $errors]);
                 }
 
                 //Add the user

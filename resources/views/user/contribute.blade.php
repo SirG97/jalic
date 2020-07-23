@@ -13,7 +13,7 @@
                         <div class="container">
                             <div class="row cool-border trx-bg-head py-3">
                                 <div class="col-md-8 offset-md-2">
-                                    @include('includes\message')
+                                    @include('includes.message')
                                     <div class="form-row">
                                         <input type="hidden" id="token" name="token" value="{{\App\Classes\CSRFToken::_token()}}">
                                         <div class="col-md-6 mb-3">

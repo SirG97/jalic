@@ -28,7 +28,7 @@ class UserController extends BaseController {
              Redirect::to('/unauthorized');
          }else{
              $managers = User::where('admin_right','staff')->orderBy('id','desc')->get();
-             return view('user\managers', ['staffs' => $managers]);
+             return view('user.managers', ['staffs' => $managers]);
          }
 
      }
@@ -36,14 +36,14 @@ class UserController extends BaseController {
      public function get_single_staff($id){
          $id = $id['staff_id'];
          $profile = User::where('user_id', $id)->first();
-         return view('user\staff', ['profile' => $profile]);
+         return view('user.staff', ['profile' => $profile]);
      }
 
      public function new_staff_form(){
          if(Session::get('priviledge') !== 'Admin'){
              Redirect::to('/unauthorized');
          }else{
-             return view('user\staff_form');
+             return view('user.staff_form');
          }
 
      }
@@ -84,7 +84,7 @@ class UserController extends BaseController {
                     if($validation->hasError()){
                         $input_errors = $validation->getErrorMessages();
                         count($file_error) ? $errors = array_merge($input_errors, $file_error) : $errors = $input_errors;
-                        return view('user\staff_form', ['errors' => $errors]);
+                        return view('user.staff_form', ['errors' => $errors]);
                     }
 
                     // Deal with the upload first
@@ -248,7 +248,7 @@ class UserController extends BaseController {
          $id = Session::get('SESSION_USER_ID');
          $profile = User::where('user_id', $id)->first();
          //dd($profile);
-         return view('user\profile', ['profile' => $profile]);
+         return view('user.profile', ['profile' => $profile]);
      }
 
 }

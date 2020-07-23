@@ -13,7 +13,7 @@
                         <div class="container">
                             <div class="row trx-bg-head py-3">
                                 <div class="col-md-8 offset-md-2">
-                                    @include('includes\message')
+                                    @include('includes.message')
 
                                     @if(!empty($profile))
 

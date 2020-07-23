@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                @include('includes\message')
+                @include('includes.message')
             </div>
         </div>
         <div class="row">

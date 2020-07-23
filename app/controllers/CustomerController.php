@@ -17,7 +17,7 @@ use App\Models\Contribution;
 class CustomerController extends BaseController{
     public function show(){
         $customers = Customer::all();
-        return view('user\customers', ['customers' => $customers]);
+        return view('user.customers', ['customers' => $customers]);
     }
 
     public function verifycustomer($id){
@@ -79,7 +79,7 @@ class CustomerController extends BaseController{
             $total_service_charge = $total_service_charge + (int)$service_charge[$i]->gain;
         }
 
-        return view('user\customerdetails', [
+        return view('user.customerdetails', [
                                                     'customer' =>$customer,
                                                     'contributions' => $contributions,
                                                     'withdrawn' => $total_withdrawn,
@@ -97,7 +97,7 @@ class CustomerController extends BaseController{
 
 
     public function showcustomerform(){
-        return view('user\customer');
+        return view('user.customer');
     }
 
     public function storecustomer(){
@@ -132,7 +132,7 @@ class CustomerController extends BaseController{
                 $validation->validate($_POST, $rules);
                 if($validation->hasError()){
                     $errors = $validation->getErrorMessages();
-                    return view('user\customer', ['errors' => $errors]);
+                    return view('user.customer', ['errors' => $errors]);
                 }
 
                 //Add the user
