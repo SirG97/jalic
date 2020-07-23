@@ -6,7 +6,7 @@ use App\Classes\Redirect;
 
 class IndexController extends BaseController{
     public function show(){
-        return view('user\login');
+        return view('user.login');
 
     }
 }
