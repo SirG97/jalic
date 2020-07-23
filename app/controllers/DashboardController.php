@@ -69,10 +69,10 @@ class DashboardController extends BaseController{
 
         // TODO: Doughnut pie of channel used
         return view('user.dashboard', ['total_orders'=> '$total_orders',
-                                            'total_completed' => $total_completed,
-                                            'total_ongoing' => $total_ongoing,
-                                            'total_pot' => $total_pot,
-                                            'orders' => $latest_order]);
+                                            'total_completed' => '$total_completed',
+                                            'total_ongoing' => '$total_ongoing',
+                                            'total_pot' => '$total_pot',
+                                            'orders' => '$latest_order']);
     }
 
     public function get(){
