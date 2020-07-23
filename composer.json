@@ -27,7 +27,7 @@
         "psr-4":{
             "App\\": "app"
         },
-        "files":["App/functions/helper.php"]
+        "files":["app/functions/helper.php"]
     },
     "config":{
         "optimize-autoloader":true
