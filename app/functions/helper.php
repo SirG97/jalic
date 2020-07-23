@@ -17,20 +17,20 @@ function view($path, array $data = []){
     //echo $blade->run($path, $data);
 }
 
-function make($filename, $data){
-    extract($data);
-    // Start output buffering
-    ob_start();
-    // include template
-    include(__DIR__. '/../../resources/views/emails/' . $filename . '.php');
-
-    // get content
-    $content = ob_get_contents();
-    // Erase the output and clear the buffer
-    ob_end_clean();
-
-    return $content;
-}
+//function make($filename, $data){
+//    extract($data);
+//    // Start output buffering
+//    ob_start();
+//    // include template
+//    include(__DIR__. '/../../resources/views/emails/' . $filename . '.php');
+//
+//    // get content
+//    $content = ob_get_contents();
+//    // Erase the output and clear the buffer
+//    ob_end_clean();
+//
+//    return $content;
+//}
 
 function isAuthenticated(){
     return Session::has('SESSION_USER_ID') ? true : false;
