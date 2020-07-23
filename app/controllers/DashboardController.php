@@ -22,7 +22,7 @@ class DashboardController extends BaseController{
     }
     public function show(){
         // TODO: Total customer
-        $total_orders = Order::all()->count();
+        $total_customers = Customer::all()->count();
 
         // Total completed
         $total_completed = Order::where('order_status', '=', ['completed', 'delivered'])->count();

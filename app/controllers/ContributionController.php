@@ -40,37 +40,42 @@ class ContributionController extends BaseController {
     }
 
     public function approve(){
-        if(Request::has('post')){
-            $request = Request::get('post');
-            if(CSRFToken::verifyCSRFToken($request->token)){
+        if(Session::get('priviledge') !== 'Admin'){
+            Redirect::to('/unauthorized');
+        }else{
+            if(Request::has('post')){
+                $request = Request::get('post');
+                if(CSRFToken::verifyCSRFToken($request->token)){
 
-                $rules = [
-                    'contribution_id' => ['required' => true]
-                ];
-                $validation = new Validation();
-                $validation->validate($_POST, $rules);
-                if($validation->hasError()){
-                    $errors = $validation->getErrorMessages();
-                    Session::add('error', 'Validation failed..');
+                    $rules = [
+                        'contribution_id' => ['required' => true]
+                    ];
+                    $validation = new Validation();
+                    $validation->validate($_POST, $rules);
+                    if($validation->hasError()){
+                        $errors = $validation->getErrorMessages();
+                        Session::add('error', 'Validation failed..');
+                        Redirect::to('/unapproved');
+                        exit();
+                    }
+
+                    $details = [
+                        'status' => 'approved',
+                        'approved_by' => Session::get('SESSION_USER_ID')
+                    ];
+
+                    Contribution::where('contribution_id', $request->contribution_id)->update($details);
+                    Session::add('success', 'Transaction approved');
+
                     Redirect::to('/unapproved');
                     exit();
+
                 }
 
-                $details = [
-                    'status' => 'approved',
-                    'approved_by' => Session::get('SESSION_USER_ID')
-                ];
-
-                Contribution::where('contribution_id', $request->contribution_id)->update($details);
-                Session::add('success', 'Transaction approved');
-
                 Redirect::to('/unapproved');
-                exit();
-
             }
-
-            Redirect::to('/unapproved');
         }
+
     }
 
     public function contribute_form(){
@@ -399,8 +404,16 @@ class ContributionController extends BaseController {
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_string)));
                 $result = curl_exec($ch);
-                $res_array = json_decode($result);
-                dd($res_array);
+                $res = json_decode($result);
+                if($res->status === 1){
+                    Session::add('success', 'Message sent successfully');
+                    Redirect::to('/message');
+                    exit();
+                }else{
+                    Session::add('error', 'Message not sent');
+                    Redirect::to('/message');
+                    exit();
+                }
 
             }
         }

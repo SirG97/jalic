@@ -9,6 +9,12 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 class Database{
     public function __construct(){
         $db = new Capsule();
+//        $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+//
+//        $server = $url["host"];
+//        $username = $url["user"];
+//        $password = $url["pass"];
+//        $db = substr($url["path"], 1);
         $db->addConnection([
 //            'driver' => getenv('DB_DRIVER'),
 //            'host' => getenv('DB_HOST'),
@@ -16,10 +22,10 @@ class Database{
 //            'username' => getenv('DB_USERNAME'),
 //            'password' => getenv('DB_PASSWORD'),
             'driver' => 'mysql',
-            'host' => 'jalic.herokuapp.com',
-            'database' => 'ononixi1_jalic',
-            'username' => 'ononixi1_jalic',
-            'password' => 'rrwcscrz1jalic',
+            'host' => 'db4free.net',
+            'database' => 'sarge_jalic',
+            'username' => 'sarge_jalic',
+            'password' => 'rrwcscrz1_jalic',
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => ''

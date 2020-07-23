@@ -16,18 +16,19 @@
                             @include('includes.message')
                             <div class="row trx-bg-head py-3" style="border-top: 1px solid #e3e8ee; border-bottom: 1px solid #e3e8ee">
                                 <div class="col-md-4 offset-md-3">
-                                    <div class="form-group">
-                                        <input type="hidden" name="token" value="{{\App\Classes\CSRFToken::_token()}}">
-                                        <label for="numbers" class="">Customer ID</label>
-                                        <input type="text" class="form-control" value="" id="customer_id" name="customer_id">
-                                    </div>
-                                    <div class="form-group">
+
+                                    <div class="form-group class">
                                         <label for="numbers" class="">Name</label>
-                                        <input type="text" class="form-control" value="" id="name" name="name" readonly>
+                                        <input type="text" class="form-control" value="" id="name" name="name">
+                                        <div class="search-result">
+                                            <ul class="list-group list-group-flush" id="search-result-list">
+
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="numbers" class="">Number</label>
-                                        <input type="text" class="form-control" value="" id="number" name="number">
+                                        <input type="text" class="form-control" value="" id="number" name="number" readonly>
                                     </div>
 
                                     <div class="form-group">
