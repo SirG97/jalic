@@ -18,7 +18,7 @@
                 <h3 class="text-center font-weight-bold text-logo">Jon Jalic Admin</h3>
 
                 <div class="login-box align-items-center">
-                    @include('includes\message')
+                    @include('includes.message')
                     @yield('content')
                 </div>
             </div>
