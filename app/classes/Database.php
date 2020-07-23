@@ -16,7 +16,7 @@ class Database{
 //            'username' => getenv('DB_USERNAME'),
 //            'password' => getenv('DB_PASSWORD'),
             'driver' => 'mysql',
-            'host' => 'jalic.herokuapp.com',
+            'host' => '',
             'database' => 'ononixi1_jalic',
             'username' => 'ononixi1_jalic',
             'password' => 'rrwcscrz1jalic',
