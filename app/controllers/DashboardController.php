@@ -68,11 +68,7 @@ class DashboardController extends BaseController{
 //        $latest_contributions = Contribution::orderBy('id', 'desc')->take(10)->get();
 
         // TODO: Doughnut pie of channel used
-        return view('user.dashboard', ['total_orders'=> '$total_orders',
-                                            'total_completed' => '$total_completed',
-                                            'total_ongoing' => '$total_ongoing',
-                                            'total_pot' => '$total_pot',
-                                            'orders' => '$latest_order']);
+        return view('user.dashboard');
     }
 
     public function get(){
