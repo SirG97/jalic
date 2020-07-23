@@ -184,12 +184,6 @@
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/moment.min.js"></script>
 <script src="/js/script.js"></script>
-<script>
 
-    function hello(d){
-        console.log(d.attr("data-id"));
-
-    }
-</script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 @endphp
 @if($priviledge === 'Admin')
     @extends('user.layout.base')
-@elseif($priviledge === 'Manager')
+@elseif($priviledge === 'Staff')
     @extends('user.layout.staffmenu')
 @endif
 

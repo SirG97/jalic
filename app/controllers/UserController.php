@@ -24,8 +24,13 @@ class UserController extends BaseController {
 
 
      public function get_staff(){
-         $managers = User::where('admin_right','staff')->orderBy('id','desc')->get();
-         return view('user\managers', ['staffs' => $managers]);
+         if(Session::get('priviledge') !== 'Admin'){
+             Redirect::to('/unauthorized');
+         }else{
+             $managers = User::where('admin_right','staff')->orderBy('id','desc')->get();
+             return view('user\managers', ['staffs' => $managers]);
+         }
+
      }
 
      public function get_single_staff($id){
@@ -35,83 +40,93 @@ class UserController extends BaseController {
      }
 
      public function new_staff_form(){
-         return view('user\staff_form');
+         if(Session::get('priviledge') !== 'Admin'){
+             Redirect::to('/unauthorized');
+         }else{
+             return view('user\staff_form');
+         }
+
      }
 
      public function store_staff(){
-         if(Request::has('post')){
-             $request = Request::get('post');
-             if(CSRFToken::verifyCSRFToken($request->token)){
-                 $rules = [
-                     'email' => ['required' => true, 'maxLength' => 30, 'email' => true, 'unique' =>'users'],
-                     'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
-                     'lastname' => ['string' => true, 'maxLength' => 40],
-                     'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true, 'unique' => 'users'],
-                     'branch' => ['required' => true, 'maxLength' => '50', 'string' => true],
-                     'unit_manager' => ['required' => true, 'maxLength' => '50', 'string' => true],
-                     'address' => ['required' => true, 'maxLength' => '150'],
-                     'password' => ['required' => true,  'minLength' => 5],
-                     'admin_right' => ['required' => true, 'maxLength' => 50],
-                     'job_title' => ['required' => true, 'maxLength' => 100],
-                     'job_description' => ['maxLength' => 150]
-                 ];
-                 $validation = new Validation();
-                 $validation->validate($_POST, $rules);
+        if(Session::get('priviledge') !== 'Admin'){
+            Redirect::to('/unauthorized');
+        }else{
+            if(Request::has('post')){
+                $request = Request::get('post');
+                if(CSRFToken::verifyCSRFToken($request->token)){
+                    $rules = [
+                        'email' => ['required' => true, 'maxLength' => 30, 'email' => true, 'unique' =>'users'],
+                        'firstname' => ['required' => true, 'maxLength' => 40, 'string' => true],
+                        'lastname' => ['string' => true, 'maxLength' => 40],
+                        'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true, 'unique' => 'users'],
+                        'branch' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                        'unit_manager' => ['required' => true, 'maxLength' => '50', 'string' => true],
+                        'address' => ['required' => true, 'maxLength' => '150'],
+                        'password' => ['required' => true,  'minLength' => 5],
+                        'admin_right' => ['required' => true, 'maxLength' => 50],
+                        'job_title' => ['required' => true, 'maxLength' => 100],
+                        'job_description' => ['maxLength' => 150]
+                    ];
+                    $validation = new Validation();
+                    $validation->validate($_POST, $rules);
 
-                 // File validation in case it exists
-                 $file = Request::get('file');
+                    // File validation in case it exists
+                    $file = Request::get('file');
 //                 dd($file);
-                 $filename = isset($file->profile_pics->name) ? $filename = $file->profile_pics->name: $filename = '';
-                 $file_error = [];
-                 if(empty($filename)){
-                     $file_error['profile_pics'] = ['upload an image'];
-                 }elseif (!Upload::is_image($filename)){
-                     $file_error['profile_pics'] = ['Image is not a valid image'];
-                 }
-                 if($validation->hasError()){
-                     $input_errors = $validation->getErrorMessages();
-                     count($file_error) ? $errors = array_merge($input_errors, $file_error) : $errors = $input_errors;
-                     return view('user\staff_form', ['errors' => $errors]);
-                 }
+                    $filename = isset($file->profile_pics->name) ? $filename = $file->profile_pics->name: $filename = '';
+                    $file_error = [];
+                    if(empty($filename)){
+                        $file_error['profile_pics'] = ['upload an image'];
+                    }elseif (!Upload::is_image($filename)){
+                        $file_error['profile_pics'] = ['Image is not a valid image'];
+                    }
+                    if($validation->hasError()){
+                        $input_errors = $validation->getErrorMessages();
+                        count($file_error) ? $errors = array_merge($input_errors, $file_error) : $errors = $input_errors;
+                        return view('user\staff_form', ['errors' => $errors]);
+                    }
 
-                 // Deal with the upload first
-                 $ds = DIRECTORY_SEPARATOR;
-                 // Resize the image
-                 $temp_file = $file->profile_pics->tmp_name;
+                    // Deal with the upload first
+                    $ds = DIRECTORY_SEPARATOR;
+                    // Resize the image
+                    $temp_file = $file->profile_pics->tmp_name;
 
-                 $image_path = Upload::move($temp_file, "img{$ds}uploads{$ds}profile", $filename)->path();
-                 if($image_path !== ''){
-                     $resize = new Resize();
-                     $resize->squareImage($image_path, $image_path, 128);
-                 }
+                    $image_path = Upload::move($temp_file, "img{$ds}uploads{$ds}profile", $filename)->path();
+                    if($image_path !== ''){
+                        $resize = new Resize();
+                        $resize->squareImage($image_path, $image_path, 128);
+                    }
 
-                 //Add the user
-                 $details = [
-                     'user_id' => Random::generateId(10),
-                     'lastname' => $request->lastname,
-                     'firstname' => $request->firstname,
-                     'email' => $request->email,
-                     'phone' => $request->phone,
-                     'address' => $request->address,
-                     'branch' => $request->branch,
-                     'unit_manager' => $request->unit_manager,
-                     'password' => password_hash($request->password, PASSWORD_BCRYPT),
-                     'admin_right' => $request->admin_right,
-                     'job_title' => $request->job_title,
-                     'job_description' => $request->job_description,
-                     'image' => $image_path
-                 ];
+                    //Add the user
+                    $details = [
+                        'user_id' => Random::generateId(10),
+                        'lastname' => $request->lastname,
+                        'firstname' => $request->firstname,
+                        'email' => $request->email,
+                        'phone' => $request->phone,
+                        'address' => $request->address,
+                        'branch' => $request->branch,
+                        'unit_manager' => $request->unit_manager,
+                        'password' => password_hash($request->password, PASSWORD_BCRYPT),
+                        'admin_right' => $request->admin_right,
+                        'job_title' => $request->job_title,
+                        'job_description' => $request->job_description,
+                        'image' => $image_path
+                    ];
 
-                 User::create($details);
-                 Request::refresh();
-                 Session::add('success', 'New user created successfully');
+                    User::create($details);
+                    Request::refresh();
+                    Session::add('success', 'New user created successfully');
 
-                 Redirect::to('/staff');
-                 exit();
+                    Redirect::to('/staff');
+                    exit();
 
-             }
-             Redirect::to('/staff');
-         }
+                }
+                Redirect::to('/staff');
+            }
+        }
+
 
      }
 

@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin :: @yield('title')</title>
+    <link rel="favicon" href="/favicon.ico">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/all.css">
     <link rel="stylesheet" href="/css/Chart.min.css">
     <link rel="stylesheet" href="/css/style.css">
 
-    <script src="/js/Chart.bundle.min.js"></script>
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/moment.min.js"></script>
-    <script src="/js/script.js"></script>
+
+
 </head>
 <body>
 <div class="">
@@ -33,15 +31,15 @@
             <div class="nav_section_content company">
                 <div class="nav_item prelative">
                     <a href="" class="nav_flex">
-                       <span class="company-icon d-flex justify-content-center">
-                         <img src="/img/favicon.png" class="img-fluid" />
-                        </span>
-                        <span class="company_text font-weight-bold">Updel Admin</span>
+                            <span class="company-icon d-flex justify-content-center align-items-center">
+                             <i class="fas fa-shield-alt"></i>
+                            </span>
+                        <span class="company_text font-weight-bold">JON JALIC</span>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="nav_section">
+        <div class="nav_section margin-fix scroll-menu">
             <div class="nav_section_content">
                 <div class="nav_item prelative">
                     <a href="/dashboard" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/dashboard')}}">
@@ -59,57 +57,49 @@
                         <span class="nav_link_text">Profile</span>
                     </a>
                 </div>
-
                 <div class="nav_item prelative">
-                    <a href="/authorize" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/authorize')}}">
+                    <a href="/customers" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/customers')}}">
                             <span class="nav_link_icon">
-                             <i class="fas fa-fw fa-qrcode"></i>
+                             <i class="fas fa-fw fa-users"></i>
                             </span>
-                        <span class="nav_link_text">Authorize Delivery</span>
+                        <span class="nav_link_text">Customers</span>
+                    </a>
+                </div>
+                <div class="nav_item prelative">
+                    <a href="/new_customer" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/new_customer')}}">
+                            <span class="nav_link_icon">
+                             <i class="fas fa-fw fa-user-plus"></i>
+                            </span>
+                        <span class="nav_link_text">New Customer</span>
                     </a>
                 </div>
 
                 <div class="nav_item prelative">
-                    <a href="/district_routes" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/district_routes')}}">
+                    <a href="/contributions" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/contributions')}}">
+                            <span class="nav_link_icon">
+                             <i class="fas fa-fw fa-user-plus"></i>
+                            </span>
+                        <span class="nav_link_text">Contributions</span>
+                    </a>
+                </div>
+                <div class="nav_item prelative">
+                    <a href="/mark_contribution" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/mark_contribution')}}">
                             <span class="nav_link_icon">
                              <i class="fas fa-fw fa-paper-plane"></i>
                             </span>
-                        <span class="nav_link_text">Districts/Routes</span>
+                        <span class="nav_link_text">Mark Contribution</span>
                     </a>
                 </div>
                 <div class="nav_item prelative">
-                    <a href="/assign_routes" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/assign_routes')}}">
+                    <a href="/message" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/message')}}">
                             <span class="nav_link_icon">
-                             <i class="fas fa-fw fa-route"></i>
+                             <i class="fas fa-fw fa-envelope"></i>
+
                             </span>
-                        <span class="nav_link_text">Assign Routes</span>
-                    </a>
-                </div>
-                <div class="nav_item prelative">
-                    <a href="/orders" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/orders')}}">
-                         <span class="nav_link_icon">
-                          <i class="fas fa-fw fa-truck"></i>
-                         </span>
-                        <span class="nav_link_text">Orders</span>
-                    </a>
-                </div>
-                <div class="nav_item prelative">
-                    <a href="/create_order" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/create_order')}}">
-                            <span class="nav_link_icon">
-                             <i class="fas fa-fw fa-shipping-fast"></i>
-                            </span>
-                        <span class="nav_link_text">New Order</span>
+                        <span class="nav_link_text">Send SMS</span>
                     </a>
                 </div>
 
-                <div class="nav_item prelative">
-                    <a href="/pot" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/pot')}}">
-                            <span class="nav_link_icon">
-                             <i class="fas fa-fw fa-trash-restore"></i>
-                            </span>
-                        <span class="nav_link_text">Pot</span>
-                    </a>
-                </div>
                 <div class="nav_item prelative">
                     <a href="/settings" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/settings')}}">
                             <span class="nav_link_icon">
@@ -119,7 +109,7 @@
                     </a>
                 </div>
                 <div class="nav_item prelative">
-                    <a href="/logout" class="nav_link nav_flex">
+                    <a href="/logout" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/logout')}}">
                          <span class="nav_link_icon">
                           <i class="fas fa-fw fa-sign-out-alt"></i>
                          </span>
@@ -145,19 +135,25 @@
             </span>
         <div class="nav-dropdown">
             <div class="nav-dropdown-item">
-                <div class="nav-dropdown-item-link">
-                    Profile
-                </div>
+                <a href="/profile">
+                    <div class="nav-dropdown-item-link">
+                        Profile
+                    </div>
+                </a>
             </div>
             <div class="nav-dropdown-item">
-                <div class="nav-dropdown-item-link">
-                    Settings
-                </div>
+                <a href="/settings">
+                    <div class="nav-dropdown-item-link">
+                        Settings
+                    </div>
+                </a>
             </div>
             <div class="nav-dropdown-item">
-                <div class="nav-dropdown-item-link">
-                    Logout
-                </div>
+                <a href="/logout">
+                    <div class="nav-dropdown-item-link">
+                        Logout
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -169,10 +165,10 @@
 </main>
 
 
-<script>
-    let ctx = $('#contribution-canvas');
-
-</script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/moment.min.js"></script>
+<script src="/js/script.js"></script>
 
 </body>
 </html>

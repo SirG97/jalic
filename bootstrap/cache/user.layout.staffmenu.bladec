@@ -73,22 +73,7 @@
  <span class="nav_link_text">New Customer</span>
  </a>
  </div>
- <div class="nav_item prelative">
- <a href="/staff" class="nav_link nav_flex <?php echo \htmlentities(\App\Classes\Menu::is_active('/staff'), ENT_QUOTES, 'UTF-8', false); ?>">
- <span class="nav_link_icon">
- <i class="fas fa-fw fa-headset"></i>
- </span>
- <span class="nav_link_text">Staff</span>
- </a>
- </div>
- <div class="nav_item prelative">
- <a href="/new_staff" class="nav_link nav_flex <?php echo \htmlentities(\App\Classes\Menu::is_active('/new_staff'), ENT_QUOTES, 'UTF-8', false); ?>">
- <span class="nav_link_icon">
- <i class="fas fa-fw fa-user-lock"></i>
- </span>
- <span class="nav_link_text">New Staff</span>
- </a>
- </div>
+
  <div class="nav_item prelative">
  <a href="/contributions" class="nav_link nav_flex <?php echo \htmlentities(\App\Classes\Menu::is_active('/contributions'), ENT_QUOTES, 'UTF-8', false); ?>">
  <span class="nav_link_icon">

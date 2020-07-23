@@ -27,7 +27,7 @@ class ContributionController extends BaseController {
         }
     }
 
-    public function get_all(){
+    public function get_all($page=null){
         $contributions = Contribution::where('status', 'approved')->with(['user'])->get();
 
         return view('user\contributions', ['contributions' => $contributions]);

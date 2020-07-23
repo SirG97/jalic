@@ -1,4 +1,4 @@
-@extends('user.layout.base')
+@extends('user.layout.access_role')
 @section('title', 'Contributions')
 @section('icon', 'fa-coins')
 @section('content')
@@ -58,6 +58,9 @@
 
                                     </tr>
                                     @endforeach
+{{--                                    {{ $contributions->links('views.bootstrap-4') }}--}}
+
+
                                 @else
                                     <tr>
                                         <td colspan="7">
@@ -67,7 +70,9 @@
                                 @endif
 
                             </tbody>
+
                         </table>
+
                     </div>
 
                 </div>
