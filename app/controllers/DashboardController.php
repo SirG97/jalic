@@ -8,8 +8,8 @@ use App\Classes\Redirect;
 use App\Classes\Request;
 use App\Classes\Validation;
 use App\Models\Order;
-use App\Models\Pin;
-use App\Model\Customer;
+
+use App\Models\Customer;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Carbon\Carbon;
 
