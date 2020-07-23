@@ -9,7 +9,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 function view($path, array $data = []){
     // specify the path to the view and cache path
-    $view = '../../resources/views';
+    $view = __DIR__.'/../../resources/views';
     $cache = __DIR__.'/../../bootstrap/cache';
     $blade = new BladeOne($view,$cache,BladeOne::MODE_DEBUG);
 
