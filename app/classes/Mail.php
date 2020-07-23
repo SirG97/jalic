@@ -31,7 +31,7 @@ class Mail{
 
         // Authentication info
         $this->mail->Username = 'sarge97';
-        $this->mail->Password = 'rrwcscrz1';
+        $this->mail->Password = 'rrwcscrz1.';
 
         $this->mail->isHTML(true);
 
