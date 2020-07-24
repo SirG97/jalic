@@ -106,7 +106,7 @@ class CustomerController extends BaseController{
             if(CSRFToken::verifyCSRFToken($request->token)){
 
                 $rules = [
-                    'email' => [ 'maxLength' => 30, 'email' => true, 'unique' =>'customers'],
+                    'email' => [ 'maxLength' => 30,],
                     'name' => ['required' => true, 'maxLength' => 50, 'string' => true],
                     'title' => ['string' => true, 'maxLength' => 10],
                     'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true, 'unique' => 'customers'],
@@ -115,7 +115,6 @@ class CustomerController extends BaseController{
                     'address' => ['required' => true, 'maxLength' => '150'],
                     'dob' => ['mixed' => true],
                     'sex' => ['maxLength' => 10,  'string' => true],
-                    'image' => ['string' => true],
                     'saving_period' => ['required' => true],
                     'amount' => ['required' => true,  'number' => true],
                     'account_number' => ['number' => true],
@@ -182,7 +181,7 @@ class CustomerController extends BaseController{
             $request = Request::get('post');
             if(CSRFToken::verifyCSRFToken($request->token, false)){
                 $rules = [
-                    'email' => [ 'maxLength' => 30, 'email' => true],
+                    'email' => [ 'maxLength' => 30,],
                     'name' => ['required' => true, 'maxLength' => 50, 'string' => true],
                     'title' => ['string' => true, 'maxLength' => 10],
                     'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true],
@@ -191,7 +190,7 @@ class CustomerController extends BaseController{
                     'address' => ['required' => true, 'maxLength' => '150'],
                     'dob' => ['mixed' => true],
                     'sex' => ['maxLength' => 10,  'string' => true],
-                    'image' => ['string' => true],
+
                     'saving_period' => ['required' => true, 'string' => true],
                     'amount' => ['required' => true,  'number' => true],
                     'account_number' => ['number' => true],
@@ -224,7 +223,6 @@ class CustomerController extends BaseController{
                     'address' => $request->address,
                     'dob' => $request->dob,
                     'sex' => $request->sex,
-                    'image' => $request->image,
                     'saving_period' => $request->saving_period,
                     'amount' => $request->amount,
                     'purpose' => $request->purpose,
