@@ -356,22 +356,25 @@ class ContributionController extends BaseController {
     }
 
     public function send_sms(){
-        if(Request::has('post')){
-            $request = Request::get('post');
-            if(CSRFToken::verifyCSRFToken($request->token)){
-                //Validation Rules
-                $rules = [
-                    'customer_id' => ['required' => true],
-                    'number' => ['required' => true,'mixed' => true],
-                    'message' => ['required' => true],
-                ];
-                //Run Validation and return errors
-                $validation = new Validation();
-                $validation->validate($_POST, $rules);
-                if($validation->hasError()){
-                    $errors = $validation->getErrorMessages();
-                    return view('user.message', ['errors' => $errors]);
-                }
+        if(Session::get('priviledge') !== 'Admin'){
+            Redirect::to('/unauthorized');
+        }else {
+            if (Request::has('post')) {
+                $request = Request::get('post');
+                if (CSRFToken::verifyCSRFToken($request->token)) {
+                    //Validation Rules
+                    $rules = [
+                        'customer_id' => ['required' => true],
+                        'number' => ['required' => true, 'mixed' => true],
+                        'message' => ['required' => true],
+                    ];
+                    //Run Validation and return errors
+                    $validation = new Validation();
+                    $validation->validate($_POST, $rules);
+                    if ($validation->hasError()) {
+                        $errors = $validation->getErrorMessages();
+                        return view('user.message', ['errors' => $errors]);
+                    }
 
 //                $is_registered_customer = Customer::where('customer_id', '=', $request->customer_id)->first();
 //                if($is_registered_customer == null){
@@ -381,38 +384,39 @@ class ContributionController extends BaseController {
 //                }
 
 
-                // Let's send our message
-                $email = "sirgittarus@gmail.com";
-                $password = "rrwcscrz1";
-                $message = $request->message;
-                $sender_name = "Jon Jalic";
-                $recipients = $request->number;
-                $forcednd = 1;
+                    // Let's send our message
+                    $email = "sirgittarus@gmail.com";
+                    $password = "rrwcscrz1";
+                    $message = $request->message;
+                    $sender_name = "Jon Jalic";
+                    $recipients = $request->number;
+                    $forcednd = 1;
 
-                $data = array(
-                    "email" => $email,
-                    "password" => $password,
-                    "message"=>$message,
-                    "sender_name"=>$sender_name,
-                    "recipients"=>$recipients,
-                    "forcednd"=>$forcednd);
-                $data_string = json_encode($data);
+                    $data = array(
+                        "email" => $email,
+                        "password" => $password,
+                        "message" => $message,
+                        "sender_name" => $sender_name,
+                        "recipients" => $recipients,
+                        "forcednd" => $forcednd);
+                    $data_string = json_encode($data);
 
-                $ch = curl_init('https://app.multitexter.com/v2/app/sms');
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: ' . strlen($data_string)));
-                $result = curl_exec($ch);
-                $res = json_decode($result);
-                if($res->status === 1){
-                    Session::add('success', 'Message sent successfully');
-                    Redirect::to('/message');
-                    exit();
-                }else{
-                    Session::add('error', 'Message not sent');
-                    Redirect::to('/message');
-                    exit();
+                    $ch = curl_init('https://app.multitexter.com/v2/app/sms');
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($data_string)));
+                    $result = curl_exec($ch);
+                    $res = json_decode($result);
+                    if ($res->status === 1) {
+                        Session::add('success', 'Message sent successfully');
+                        Redirect::to('/message');
+                        exit();
+                    } else {
+                        Session::add('error', 'Message not sent');
+                        Redirect::to('/message');
+                        exit();
+                    }
                 }
             }
         }

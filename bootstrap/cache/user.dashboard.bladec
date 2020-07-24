@@ -70,17 +70,19 @@
  <div class="col-md-12">
  <div class="custom-panel card py-2">
  <div class="font-weight-bold text-secondary mb-1 py-3 px-3">
- Orders
+ Latest transactions
  </div>
  <div class="table-responsive">
  <table class="table table-hover ">
  <thead class="trx-bg-head text-secondary py-3 px-3">
  <tr>
- <th scope="col">Name</th>
- <th scope="col">Phone</th>
+ <th scope="col">Customer ID</th>
  <th scope="col">Amount</th>
- <th scope="col">Available balance</th>
+ <th scope="col">Credit/Debit</th>
+ <th scope="col">Savings type</th>
+ <th scope="col">Balance</th>
  <th scope="col">Collected by</th>
+ <th scope="col">Posted by</th>
  <th scope="col">Date</th>
  </tr>
  </thead>

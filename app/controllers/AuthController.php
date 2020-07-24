@@ -60,7 +60,6 @@ class AuthController{
                              Session::add('pics', "/img/avatar-1.jpg");
                          }
 
-
                          Redirect::to('/dashboard');
                      }
                  }else{
@@ -69,7 +68,7 @@ class AuthController{
                  }
 
 //                Session::add('success', 'user created successfully');
-                Session::add('error', 'An error occured');
+                Session::add('error', 'An error occurred');
                 return view('user.login');
 
             }
@@ -79,11 +78,8 @@ class AuthController{
 
     }
 
-
     public function showRegister(){
-
         return view('user.register', ['success' => '','errors' => []]);
-
     }
 
     public function register(){
@@ -128,7 +124,47 @@ class AuthController{
     }
 
     public function change_password(){
+        if(Request::has('post')){
+            $request = Request::get('post');
+            if(CSRFToken::verifyCSRFToken($request->token)){
 
+                $rules = [
+                    'oldpassword' => ['required' => true, 'email' => true],
+                    'newpassword' => ['required' => true,'minLength' => 6],
+                    'comfirmpassword' => ['required' => true,'minLength' => 6]
+                ];
+                $validation = new Validation();
+                $validation->validate($_POST, $rules);
+                if($validation->hasError()){
+                    $errors = $validation->getErrorMessages();
+                    return view('user.login', ['errors' => $errors]);
+                }
+                if($request->newpassword !== $request->confirmpassword){
+                    Session::add('error', 'New password and confirm password does not match');
+                    return view('user.settings');
+                }
+
+                $user = User::where('user_id', Session::get('SESSION_USER_ID'))->first();
+                if($user){
+                    if(!password_verify($request->password, $user->password)){
+                        Session::add('error', 'Your old password is not correct');
+                        return view('user.settings');
+                    }else{
+
+                        Redirect::to('/settings');
+                    }
+                }else{
+                    Session::add('error', 'Account does not exist');
+                    return view('user.login');
+                }
+
+//                Session::add('success', 'user created successfully');
+                Session::add('error', 'An error occured');
+                return view('user.login');
+
+            }
+            throw new \Exception('Token mismatch');
+        }
     }
 
     public function logout(){

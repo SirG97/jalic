@@ -90,15 +90,7 @@
                         <span class="nav_link_text">Mark Contribution</span>
                     </a>
                 </div>
-                <div class="nav_item prelative">
-                    <a href="/message" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/message')}}">
-                            <span class="nav_link_icon">
-                             <i class="fas fa-fw fa-envelope"></i>
 
-                            </span>
-                        <span class="nav_link_text">Send SMS</span>
-                    </a>
-                </div>
 
                 <div class="nav_item prelative">
                     <a href="/settings" class="nav_link nav_flex {{\App\Classes\Menu::is_active('/settings')}}">

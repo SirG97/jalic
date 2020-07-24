@@ -61,7 +61,7 @@
  </div>
  <div class="col-md-3 mb-3">
  <label for="email">Email</label>
- <input type="text" class="form-control"  name="email" id="email" required>
+ <input type="text" class="form-control"  name="email" id="email" >
 
  </div>
  <div class="col-md-3 mb-3">
@@ -143,6 +143,8 @@
  <option value="mother">Mother</option>
  <option value="uncle">Uncle</option>
  <option value="aunt">Aunt</option>
+ <option value="brother">Brother</option>
+ <option value="sister">Sister</option>
  <option value="son">Son</option>
  <option value="daughter">Daughter</option>
  </select>

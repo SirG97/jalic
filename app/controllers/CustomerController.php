@@ -106,7 +106,7 @@ class CustomerController extends BaseController{
             if(CSRFToken::verifyCSRFToken($request->token)){
 
                 $rules = [
-                    'email' => ['required' => true, 'maxLength' => 30, 'email' => true, 'unique' =>'customers'],
+                    'email' => [ 'maxLength' => 30, 'email' => true, 'unique' =>'customers'],
                     'name' => ['required' => true, 'maxLength' => 50, 'string' => true],
                     'title' => ['string' => true, 'maxLength' => 10],
                     'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true, 'unique' => 'customers'],
@@ -147,7 +147,7 @@ class CustomerController extends BaseController{
                     'address' => $request->address,
                     'dob' => $request->dob,
                     'sex' => $request->sex,
-//                    'image' => $request->image,
+//
                     'saving_period' => $request->saving_period,
                     'amount' => $request->amount,
                     'account_number' => $request->account_number,
@@ -172,7 +172,7 @@ class CustomerController extends BaseController{
 
             }
 
-            Redirect::to('/customer');
+            Redirect::to('/customers');
         }
     }
 
@@ -182,7 +182,7 @@ class CustomerController extends BaseController{
             $request = Request::get('post');
             if(CSRFToken::verifyCSRFToken($request->token, false)){
                 $rules = [
-                    'email' => ['required' => true, 'maxLength' => 30, 'email' => true],
+                    'email' => [ 'maxLength' => 30, 'email' => true],
                     'name' => ['required' => true, 'maxLength' => 50, 'string' => true],
                     'title' => ['string' => true, 'maxLength' => 10],
                     'phone' => ['required' => true,'maxLength' => 14, 'minLength' => 11, 'number' => true],
