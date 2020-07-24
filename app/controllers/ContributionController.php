@@ -27,7 +27,7 @@ class ContributionController extends BaseController {
         }
     }
 
-    public function get_all($page=null){
+    public function get_all(){
         $contributions = Contribution::where('status', 'approved')->with(['user'])->get();
 
         return view('user.contributions', ['contributions' => $contributions]);
@@ -341,8 +341,9 @@ class ContributionController extends BaseController {
         //Get the value of the term from the array
         $term = trim($terms['terms']);
         $searchresult = Contribution::query()
-            ->where('phone', 'LIKE', "%{$term}%")
-            ->orWhere('pin', 'LIKE', "%{$term}%")->get();
+            ->where('request_type', 'LIKE', "%{$term}%")
+            ->orWhere('customer_id', 'LIKE', "%{$term}%")
+            ->orWhere('amount', 'LIKE', "%{$term}%")->get();
 
         if(!empty($searchresult) and count($searchresult) > 0){
             echo json_encode(['success' => $searchresult]);
@@ -361,9 +362,8 @@ class ContributionController extends BaseController {
                 //Validation Rules
                 $rules = [
                     'customer_id' => ['required' => true],
-                    'number' => ['required' => true,'number' => true],
-                    'message' => ['required' => true,'mixed' => true],
-
+                    'number' => ['required' => true,'mixed' => true],
+                    'message' => ['required' => true],
                 ];
                 //Run Validation and return errors
                 $validation = new Validation();
@@ -373,12 +373,12 @@ class ContributionController extends BaseController {
                     return view('user.message', ['errors' => $errors]);
                 }
 
-                $is_registered_customer = Customer::where('customer_id', '=', $request->customer_id)->first();
-                if($is_registered_customer == null){
-                    Session::add('error', 'This customer details not found');
-                    Redirect::to('/message');
-                    exit();
-                }
+//                $is_registered_customer = Customer::where('customer_id', '=', $request->customer_id)->first();
+//                if($is_registered_customer == null){
+//                    Session::add('error', 'This customer details not found');
+//                    Redirect::to('/message');
+//                    exit();
+//                }
 
 
                 // Let's send our message
@@ -414,8 +414,29 @@ class ContributionController extends BaseController {
                     Redirect::to('/message');
                     exit();
                 }
-
             }
+        }
+    }
+
+    public function get_number($terms){
+        $term = urldecode($terms['terms']);
+
+        $searchresult = Customer::query()
+            ->where('name', 'LIKE', "%{$term}%")
+            ->orWhere('customer_id', 'LIKE', "%{$term}%")
+            ->orWhere('email', 'LIKE', "%{$term}%")
+            ->orWhere('phone', 'LIKE', "%{$term}%")->get();
+        if($term === ''){
+            http_response_code(404);
+            echo json_encode(['error' => 'No result found']);
+            exit();
+        }elseif(count($searchresult) > 0){
+            echo json_encode(['success' => $searchresult]);
+            exit();
+        }else{
+            http_response_code(404);
+            echo json_encode(['error' => 'No result found']);
+            exit();
         }
     }
 

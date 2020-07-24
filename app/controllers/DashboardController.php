@@ -7,9 +7,11 @@ use App\Classes\CSRFToken;
 use App\Classes\Redirect;
 use App\Classes\Request;
 use App\Classes\Validation;
+use App\Models\Contribution;
 use App\Models\Order;
 
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Carbon\Carbon;
 
@@ -21,54 +23,32 @@ class DashboardController extends BaseController{
         }
     }
     public function show(){
-        // TODO: Total customer
+
         $total_customers = Customer::all()->count();
 
-        // Total completed
-//        $total_completed = Order::where('order_status', '=', ['completed', 'delivered'])->count();
+         // Total completed
+        $t_contribution = Contribution::where([
+            ['request_type', '=' , 'credit'],
+            ['status', '=' , 'approved'],
+        ])->get();
+        $total_contribution = number_format($t_contribution->sum('amount'));
 //
-//        // Total ongoing
-//        $total_ongoing = Order::where('order_status', 'ongoing')->count();
-//
-//        // Total pot
-//        $total_pot = Order::where('order_status', '=', ['uncompleted', 'abandoned'])->count();
-//
-//        $latest_order = Order::take(15)->orderBy('id', 'desc')->get();
-//        // Total revenue generated
-//
-//        $total_saved_available = "SELECT SUM(available_bal) total FROM contributions";
-//        $total_available = Capsule::select($total_saved_available);
-//        $total_revenue = $total_ledger[0]->total_saved - $total_available[0]->total;
-//
-//        //  Total Total number of pins
-//        $total_pins = Pin::all()->count();
-//
-//        //  Number generated vs used for 10 days period -bar or line chart
-//        $live_pins = "SELECT created_at, count(pin) as generated_pin
-//                            FROM pins
-//                            WHERE status = 'live'
-//                            AND created_at >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
-//                            GROUP BY created_at;";
-//        $get_live_pins = Capsule::select($live_pins);
-//        $used_pins = "SELECT created_at, count(pin) as generated_pin
-//                            FROM pins
-//                            WHERE status = 'used'
-//                            AND created_at >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
-//                            GROUP BY created_at;";
-//        $get_used_pins = Capsule::select($used_pins);
-//
-//        $get_contribution_count = "SELECT count(*) daily_total
-//                                    FROM contributions
-//                                    WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-//                                    GROUP BY DATE(created_at)";
-//
-//        $contribution_count = Capsule::select($get_contribution_count);
-//        // TODO: Extract the data from the query
-//
-//        $latest_contributions = Contribution::orderBy('id', 'desc')->take(10)->get();
+        $t_revenue = Contribution::where([
+            ['request_type', '=' , 'credit'],
+            ['status', '=' , 'approved'],
+        ])->get();
+        $total_revenue = number_format($t_revenue->sum('gain'));
 
-        // TODO: Doughnut pie of channel used
-        return view('user.dashboard');
+        $total_staff = User::all()->count();
+
+        $contributions = Contribution::where('status', 'approved')->with(['user'])->orderBy('id','desc')->limit(10)->get();
+
+        return view('user.dashboard', ['total_customers' => $total_customers,
+                                                'total_contribution' => $total_contribution,
+                                                'total_revenue' => $total_revenue,
+                                                'total_staff' => $total_staff,
+                                                'contributions' => $contributions
+                                                ]);
     }
 
     public function get(){

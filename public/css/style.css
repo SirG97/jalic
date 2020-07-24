@@ -404,6 +404,10 @@ header{
     border-top: 2px solid #dee2e6;
 }
 
+.searchname-result{
+    position: absolute;
+}
+
 .no-bottom-borders{
     border-bottom-right-radius: 0px !important;
     border-bottom-left-radius: 0px !important;

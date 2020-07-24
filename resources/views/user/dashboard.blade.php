@@ -11,7 +11,7 @@
                         <h5 class="text-right">
                             <i class="fas fa-users  float-left"></i>
                             <span>
-                              0
+                              {{$total_customers}}
                             </span>
                         </h5>
 
@@ -25,7 +25,7 @@
                         <h5 class="text-right">
                             <i class="fas fa-money-bill  float-left"></i>
                             <span>
-                                 0
+                                 &#8358; {{$total_contribution}}
                             </span>
                         </h5>
 
@@ -39,7 +39,7 @@
                         <h5 class="text-right">
                             <i class="fas fa-coins  float-left"></i>
                             <span>
-                                0
+                                &#8358; {{$total_revenue}}
                             </span>
                         </h5>
 
@@ -53,7 +53,7 @@
                         <h5 class="text-right">
                             <i class="fas fa-user-shield  float-left"></i>
                             <span>
-                                0
+                                {{$total_staff}}
                             </span>
                         </h5>
 
@@ -81,20 +81,34 @@
                             </tr>
                             </thead>
                             <tbody class="table-style">
+                            @if(!empty($contributions) && count($contributions) > 0)
+                                @foreach($contributions as $contribution)
+                                    <tr>
+                                        <td scope="row">{{ $contribution['customer_id'] }}</td>
+                                        <td>{{ $contribution['amount'] }}</td>
+                                        <td>{{ $contribution['request_type'] }}</td>
+                                        <td>{{ $contribution['savings_type'] }}</td>
+                                        <td>{{ $contribution['balance'] }}</td>
+                                        <td>{{ $contribution['collected_by'] }}</td>
+                                        <td>{{ $contribution->user['firstname'] }} {{$contribution->user['lastname']}}</td>
+                                        <td>{{ $contribution['created_at']->diffForHumans() }}</td>
+
+                                    </tr>
+                                @endforeach
+                                {{--    {{ $contributions->links('views.bootstrap-4') }}--}}
+
+                            @else
                                 <tr>
                                     <td colspan="7">
-                                        <div class="d-flex justify-content-center flex-column align-items-center">
-                                            <div class="align-items-center"><i class="fas fa-fw fa-money-bill fa-2x"></i></div>
-                                            <div>No Contributions yet</div>
-                                        </div>
+                                        <div class="d-flex justify-content-center">No Approved Transactions yet</div>
                                     </td>
                                 </tr>
-
+                            @endif
                             </tbody>
                         </table>
                     </div>
                     <div class="panel-footer py-1 mt-0 mr-3 d-flex justify-content-end">
-                        <a href="/orders" class="btn btn-primary btn-sm px-3">View more</a>
+                        <a href="/contributions" class="btn btn-primary btn-sm px-3">View more</a>
                     </div>
 
                 </div>

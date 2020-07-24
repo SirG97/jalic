@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     $('#customer_id').on('keyup', ()=>{
         // let district = $("#district" + " option:selected").val();
         let customer_id = $("#customer_id").val();
-        console.log(customer_id);
+
         const data = {
             customer_id: customer_id
         };
@@ -471,6 +471,77 @@ document.addEventListener('DOMContentLoaded', (event) => {
             $(".alert").alert('close');
         }, duration);
     }
+
+    // Search name for bulk sms
+
+    const searchname = $('#searchname');
+    const searchname_result = $('.searchname-result');
+    searchname.on('input', ()=>{
+        $('.searchname-result').css('display','block');
+        let terms = searchname.val();
+        console.log(terms.length);
+        if(terms.length === 0){
+            searchname.addClass('no-bottom-borders');
+            $('.searchname-result').css('display','none');
+        }else{
+            console.log(terms);
+            const url = `/getnumber/${terms}/search`;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                beforeSend: function(){
+                    searchname_result.html('loading...');
+                },
+                success: function (response) {
+
+                    let data = JSON.parse(response);
+                    if(data.success){
+                        let ul = '<ul class="list-group list-group-flush">';
+                        $.each(data, (key, value) => {
+                            $.each(value, (index, item)=>{
+                                console.log(item);
+                                ul += `<li class="list-group list-group-item">
+                                   <div>
+                                        <div id="cl" data-phone="${item.phone}" class="d-flex w-100 justify-content-between">
+                                            <h6 data-phone="${item.phone}">${item.name}</h6>
+                                            <p data-phone="${item.phone}">${item.phone}</p>
+                                        </div>
+                                    </div>
+                                </li>`;
+                            });
+                        });
+                        ul += '</ul>';
+                        $('.searchname-result').html(ul);
+                    }else{
+                        let ul = '<ul class="list-group list-group-flush">';
+                            ul += '<li>No result found</li>';
+                        ul += '</ul>';
+                        $('.searchname-result').html('No result found');
+                    }
+
+                },
+                error: function(request, error){
+                    let ul = '<ul class="list-group list-group-flush">';
+                    ul += '<li>No result found</li>';
+                    ul += '</ul>';
+                    $('.searchname-result').html('No result found');
+                }
+            });
+        }
+
+    });
+    // ul += '<li class="list-group list-group-item"><div class="d-flex w-100 justify-content-between"><h6>' + item.firstname + ' ' + item.surname + '</h6><small>'+ item.phone +'</small></div><p class="mb-1">'+ item.email +'</p></li>';
+    search.on('blur', ()=>{
+        $('#search').removeClass('no-bottom-borders');
+        // $('.search-result').css('display','none');
+    });
+
+    $(document).on('click', '#cl', function(e){
+        $('.searchname-result').css('display','none');
+       let num =  e.target.getAttribute('data-phone');
+       $("#number").val('');
+       $("#number").val(num);
+    });
 
 
 });

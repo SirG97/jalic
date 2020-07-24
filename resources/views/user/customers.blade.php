@@ -275,7 +275,7 @@
                         </table>
                     </div>
                     <div class="panel-footer py-1 mt-0 mr-3 d-flex justify-content-end">
-                        {!! $links !!}
+{{--                        {!! $links !!}--}}
                     </div>
 
                 </div>
