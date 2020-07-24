@@ -157,7 +157,8 @@ class CustomerController extends BaseController{
                     'kin_address' => $request->kin_address,
                     'kin_phone' => $request->kin_phone,
                     'kin_relationship' => $request->kin_relationship,
-                    'office' => $request->office
+                    'office' => $request->office,
+                    'user_id' => Session::get('SESSION_USER_ID')
                 ];
 
                 Customer::create($details);
