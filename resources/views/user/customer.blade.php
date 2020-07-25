@@ -96,6 +96,17 @@
                                     <div class="col-md-3 mb-3">
                                         <label for="saving_period">Savings Period</label>
                                         <input type="text" name="saving_period" value="" id="saving_period" class="form-control">
+                                        <option value="{{ \App\Classes\Request::old('post', 'saving_period') }}">
+                                            {{ \App\Classes\Request::old('post', 'saving_period') ? : "Saving period"}}
+                                        </option>
+                                        <option value="1 Month">1 Month</option>
+                                        <option value="2 Months">2 Months</option>
+                                        <option value="3 Months">3 Months</option>
+                                        <option value="4 Months">4 Months</option>
+                                        <option value="5 Months">5 Months</option>
+                                        <option value="6 Months">6 Months</option>
+                                        <option value="8 Months">8 Months</option>
+                                        <option value="Anually">Anually</option>
                                     </div>
                                     <div class="col-md-3 mb-3">
                                         <label for="amount">Daily savings</label>
