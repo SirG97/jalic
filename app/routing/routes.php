@@ -14,7 +14,7 @@ $router->map('POST', '/register', '\App\Controllers\AuthController@register', 'r
 $router->map('GET', '/login', '\App\Controllers\AuthController@show', 'login');
 $router->map('POST', '/login', '\App\Controllers\AuthController@login', 'auth');
 $router->map('GET', '/logout', '\App\Controllers\AuthController@logout', 'logout');
-$router->map('GET', '/changepassword', '\App\Controllers\AuthController@changepassword', 'change_password');
+$router->map('POST', '/changepassword', '\App\Controllers\SettingsController@change_password', 'change_password');
 
 // Dashboard
 $router->map('GET', '/dashboard', '\App\Controllers\DashboardController@show', 'dashboard');
@@ -57,6 +57,7 @@ $router->map('GET', '/getnumber/[:terms]/search', '\App\Controllers\Contribution
 // Settings
 $router->map('GET', '/settings', '\App\Controllers\SettingsController@showSettings', 'show_settings');
 $router->map('POST', '/settings', '\App\Controllers\SettngsController@settings', 'settings');
+
 
 //Access Denied and error page
 $router->map('GET', '/unauthorized', '\App\Controllers\BaseController@access_denied', 'access_denied');

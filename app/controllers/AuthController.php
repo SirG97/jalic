@@ -130,8 +130,8 @@ class AuthController{
 
                 $rules = [
                     'oldpassword' => ['required' => true, 'email' => true],
-                    'newpassword' => ['required' => true,'minLength' => 6],
-                    'comfirmpassword' => ['required' => true,'minLength' => 6]
+                    'password' => ['required' => true,'minLength' => 6],
+                    'cpassword' => ['required' => true,'minLength' => 6]
                 ];
                 $validation = new Validation();
                 $validation->validate($_POST, $rules);
@@ -139,7 +139,7 @@ class AuthController{
                     $errors = $validation->getErrorMessages();
                     return view('user.login', ['errors' => $errors]);
                 }
-                if($request->newpassword !== $request->confirmpassword){
+                if($request->password !== $request->cpassword){
                     Session::add('error', 'New password and confirm password does not match');
                     return view('user.settings');
                 }
@@ -151,6 +151,7 @@ class AuthController{
                         return view('user.settings');
                     }else{
 
+                        $user->password = password_hash($request->password, PASSWORD_BCRYPT);
                         Redirect::to('/settings');
                     }
                 }else{

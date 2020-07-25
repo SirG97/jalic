@@ -13,7 +13,7 @@
 
             <div class="custom-panel card py-2">
                 <div class="font-weight-bold text-secondary mb-1 py-3 px-3">
-                    Managers
+                    Staff list
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover ">
@@ -32,10 +32,10 @@
                             @foreach($staffs as $staff)
                                 <tr class="">
                                 <td scope="row" class="align-middle py-2">
-                                    @if($staff['image'] !== '')
-                                        <img class="avatar rounded-circle img-thumbnail img-fluid" src="/{{$staff['image']}}" alt="profile pics">
-                                    @else
+                                    @if($staff['image'] == null)
                                         <img class="avatar rounded-circle img-thumbnail img-fluid" src="/img/avatar-1.jpg" alt="profile pics">
+                                    @else
+                                        <img class="avatar rounded-circle img-thumbnail img-fluid" src="/{{$staff['image']}}" alt="profile pics">
                                     @endif
                                 </td>
                                     <td class="align-middle">

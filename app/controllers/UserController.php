@@ -27,7 +27,7 @@ class UserController extends BaseController {
          if(Session::get('priviledge') !== 'Admin'){
              Redirect::to('/unauthorized');
          }else{
-             $managers = User::where('admin_right','staff')->orderBy('id','desc')->get();
+             $managers = User::orderBy('id','desc')->get();
              return view('user.managers', ['staffs' => $managers]);
          }
 
@@ -51,6 +51,7 @@ class UserController extends BaseController {
      public function store_staff(){
         if(Session::get('priviledge') !== 'Admin'){
             Redirect::to('/unauthorized');
+            exit();
         }else{
             if(Request::has('post')){
                 $request = Request::get('post');
@@ -76,15 +77,13 @@ class UserController extends BaseController {
 //                 dd($file);
                     $filename = isset($file->profile_pics->name) ? $filename = $file->profile_pics->name: $filename = '';
                     $file_error = [];
-                    if(empty($filename)){
-                        $file_error['profile_pics'] = ['upload an image'];
-                    }elseif (!Upload::is_image($filename)){
+                    if (!empty($filename) and !Upload::is_image($filename)){
                         $file_error['profile_pics'] = ['Image is not a valid image'];
                     }
                     if($validation->hasError()){
                         $input_errors = $validation->getErrorMessages();
                         count($file_error) ? $errors = array_merge($input_errors, $file_error) : $errors = $input_errors;
-                        return view('user.staff_form', ['errors' => $errors]);
+                        return view('staff_form', ['errors' => $errors]);
                     }
 
                     // Deal with the upload first
@@ -92,10 +91,12 @@ class UserController extends BaseController {
                     // Resize the image
                     $temp_file = $file->profile_pics->tmp_name;
 
-                    $image_path = Upload::move($temp_file, "img{$ds}uploads{$ds}profile", $filename)->path();
-                    if($image_path !== ''){
-                        $resize = new Resize();
-                        $resize->squareImage($image_path, $image_path, 128);
+                    if(!empty($filename)){
+                        $image_path = Upload::move($temp_file, "img{$ds}uploads{$ds}profile", $filename)->path();
+                        if($image_path !== ''){
+                            $resize = new Resize();
+                            $resize->squareImage($image_path, $image_path, 128);
+                        }
                     }
 
                     //Add the user
@@ -126,7 +127,6 @@ class UserController extends BaseController {
                 Redirect::to('/staff');
             }
         }
-
 
      }
 
@@ -178,7 +178,7 @@ class UserController extends BaseController {
                      $user->phone = $request->phone;
                      $user->address = $request->address;
                      $user->branch = $request->branch;
-                     $user->unit_manager = $request->manager;
+                     $user->unit_manager = $request->unit_manager;
                      $user->admin_right = $request->admin_right;
                      $user->job_title = $request->job_title;
                      $user->job_description = $request->job_description;
@@ -197,9 +197,10 @@ class UserController extends BaseController {
                      if($image_path !== ''){
                          $resize = new Resize();
                          $resize->squareImage($image_path, $image_path, 128);
+                         unlink($old_image);
+                         $user->image = $image_path;
                      }
-                     unlink($old_image);
-                     $user->image = $image_path;
+
                  }
 
                  try{

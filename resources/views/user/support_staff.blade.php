@@ -31,7 +31,7 @@
                                 @foreach($staffs as $staff)
                                     <tr class="">
                                         <td scope="row" class="align-middle py-2">
-                                            @if($staff['image'] !== '')
+                                            @if($staff['image'] !== NULL or $staff['image'] !== '')
                                                 <img class="avatar rounded-circle img-thumbnail img-fluid" src="/{{$staff['image']}}" alt="profile pics">
                                             @else
                                                 <img class="avatar rounded-circle img-thumbnail img-fluid" src="/img/avatar-1.jpg" alt="profile pics">
