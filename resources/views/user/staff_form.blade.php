@@ -45,14 +45,14 @@
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="state">Unit manager</label>
-                                            <input type="text" class="form-control" name="unit_manager" id="unit_manager" required>
+                                            <input type="text" class="form-control" name="unit_manager" id="unit_manager">
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4 mb-3">
                                             <label for="amount">Password</label>
                                             <div class="input-group mb-3">
-                                                <input type="text" name="password" value="" id="password" class="form-control" >
+                                                <input type="password" name="password" value="" id="password" class="form-control" >
                                             </div>
                                         </div>
 
@@ -73,7 +73,7 @@
 
                                         <div class="col-md-4 mb-3">
                                             <label for="job_title">Job title</label>
-                                            <input type="text" class="form-control"  name="job_title" id="job_title" required>
+                                            <input type="text" class="form-control"  name="job_title" id="job_title">
                                         </div>
                                         <div class="col-md-4 mb-3">
                                             <label for="job_description">Job Description</label>
